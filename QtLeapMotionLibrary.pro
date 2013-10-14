@@ -18,5 +18,7 @@ linux : {
     QMAKE_RPATH=
 }
 
+win32:DESTDIR = ./
+
 include(LeapMotionControllerLibrary/LeapMotionControllerLibrary.pri)
 include(LeapGestureArea/LeapGestureArea.pri)
