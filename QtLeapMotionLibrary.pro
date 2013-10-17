@@ -22,3 +22,6 @@ win32:DESTDIR = ./
 
 include(LeapMotionControllerLibrary/LeapMotionControllerLibrary.pri)
 include(LeapGestureArea/LeapGestureArea.pri)
+
+RESOURCES += \
+    resources.qrc

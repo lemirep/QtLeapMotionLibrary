@@ -23,7 +23,7 @@ LeapMotionQQuickView::LeapMotionQQuickView() : QQuickView()
     qmlRegisterType<Tepee3DQmlExtensions::LeapSwipeGesture>("Tepee3D", 1, 0, "LeapSwipeGesture");
     qmlRegisterType<Tepee3DQmlExtensions::LeapTapGesture>("Tepee3D", 1, 0, "LeapTapGesture");
 
-    this->setSource(QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + "/main.qml"));
+    this->setSource(QUrl("qrc:/qml/main.qml"));
 }
 
 LeapMotionQQuickView::~LeapMotionQQuickView()
