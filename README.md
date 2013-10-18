@@ -26,3 +26,8 @@ In the project tab uncheck shadow build.
 Add an extra make step with install as the argument
 
 Build the project and enjoy !
+
+Of course you're free to use the project any way you want under either the GPL 3.0
+or LGPL 2.1 license which you'll find included with the sources.
+
+
