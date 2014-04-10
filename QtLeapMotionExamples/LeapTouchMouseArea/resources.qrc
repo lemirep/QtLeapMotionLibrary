@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>main.qml</file>
+        <file>71-300.jpg</file>
+        <file>73-300.jpg</file>
+        <file>1388-300.jpg</file>
+        <file>9617-300.jpg</file>
+        <file>10369-300.jpg</file>
+        <file>16689-300.jpg</file>
+        <file>19488-300.jpg</file>
+        <file>19657-300.jpg</file>
+        <file>23280-300.jpg</file>
+        <file>23288-300.jpg</file>
+    </qresource>
+</RCC>

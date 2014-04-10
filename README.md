@@ -1,31 +1,33 @@
 QtLeapMotionLibrary
 ===================
 
-Qt LeapMotion library adding inputs and gestures to a Qt application
+Qt LeapMotion library adds inputs and gestures to a Qt application
 
-In order to run this example, you have to download the Leap SDK for your
-platorm and copy the 'include' folder in the Leap subdirectory of the
-LeapMotionControllerLibrary.
+In order to run the examples, you have to download the Leap SDK.
+Then in QtLeapMotion create a Leap directory in which you'll copy the
+following directories from the LeapSDK :
+include
+x64 -> if on 64 bits architecture
+x86 -> if on 32 bits architectue
 
-The redistributable libraries are bundled in but to respect the Leap SDK
-agreement licence, I cannot provide the headers.
+Here what you should have on a Linux 64 bits machine :
+
+QtLeapMotionLibrary/QtLeapMotion/Leap/include/Leap.h
+QtLeapMotionLibrary/QtLeapMotion/Leap/include/Leap.i
+QtLeapMotionLibrary/QtLeapMotion/Leap/include/LeapMath.h
+QtLeapMotionLibrary/QtLeapMotion/Leap/libLeap.so
 
 The SDK can be obtained here : https://www.leapmotion.com/developers (you have
-to sign up)
+to sign up though)
 
-It should give you :
+Instructions :
 
-QtLeapMotionLibrary/LeapMotionControllerLibrary/Leap/include/Leap.h
-QtLeapMotionLibrary/LeapMotionControllerLibrary/Leap/include/Leap.i
-QtLeapMotionLibrary/LeapMotionControllerLibrary/Leap/include/LeapMath.h
+* You need to have Qt 5.* installed.
+* Open QtLeapMotionLibrary.pro in QtCreator.
+* In the project tab uncheck shadow build.
+* Build.
 
-To run the project you need to have Qt 5.* installed.
-
-To build the project open it in QtCreator.
-In the project tab uncheck shadow build.
-Add an extra make step with install as the argument
-
-Build the project and enjoy !
+Enjoy !
 
 Of course you're free to use the project any way you want under either the GPL 3.0
 or LGPL 2.1 license which you'll find included with the sources.

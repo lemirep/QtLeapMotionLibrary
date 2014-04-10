@@ -1,27 +1,8 @@
 
-QT += qml
-QT += quick
+TEMPLATE = subdirs
 
-OBJECTS_DIR = tmp
+SUBDIRS = QtLeapMotion \
+          QtLeapMotionExamples
 
-MOC_DIR = tmp
+CONFIG += ORDERED
 
-SOURCES += main.cpp \
-          LeapMotionQQuickView.cpp
-
-HEADERS += LeapMotionQQuickView.h
-
-OTHER_FILES += main.qml
-
-linux : {
-    QMAKE_LFLAGS += -Wl,--rpath=$$PWD
-    QMAKE_RPATH=
-}
-
-win32:DESTDIR = ./
-
-include(LeapMotionControllerLibrary/LeapMotionControllerLibrary.pri)
-include(LeapGestureArea/LeapGestureArea.pri)
-
-RESOURCES += \
-    resources.qrc
