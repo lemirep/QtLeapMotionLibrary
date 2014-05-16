@@ -25,3 +25,37 @@
 
 TEMPLATE = app
 TARGET = LeapSwipeGesture
+
+QT += quick qml
+
+SOURCES += main.cpp
+
+OTHER_FILES += main.qml
+
+RESOURCES += resources.qrc
+
+INCLUDEPATH += ../../QtLeapMotion/
+INCLUDEPATH += ../../QtLeapMotion/Leap/include
+
+
+# WORKS ONLY WITH QT COMPILED FOR MSVC
+win32: {
+ !contains(QMAKE_HOST.arch, x86_64) {
+        message("x86 build")
+        LIBS += -L../../QtLeapMotion/Leap/x86/Leap.lib
+        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+    } else {
+        message("x86_64 build")
+        LIBS += -L../../QtLeapMotion/Leap/x64/Leap.lib
+        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+    }
+}
+
+linux-g++-32 {
+    LIBS += -L../../QtLeapMotion/Leap/x86/ -lLeap
+    LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+}
+
+#linux-g++-64 {
+    LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+    LIBS += -L../../QtLeapMotion/Leap/x64/ -lLeap

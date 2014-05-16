@@ -254,10 +254,12 @@ void QtLeapMotionListener::registerGestureListener(QtLeapGestureListenerInterfac
 {
     if (motionListener != Q_NULLPTR && !this->gestureListeners.contains(motionListener))
     {
-        qDebug() << Q_FUNC_INFO;
+        qDebug() << Q_FUNC_INFO << motionListener;
         this->gestureListeners << motionListener;
-        foreach (QtLeapGestureHandlerInterface *handler, this->gestureHandlers)
+        foreach (QtLeapGestureHandlerInterface *handler, this->gestureHandlers) {
+            qDebug() << Q_FUNC_INFO << " >>";
             handler->setMotionListeners(this->gestureListeners);
+        }
     }
 }
 

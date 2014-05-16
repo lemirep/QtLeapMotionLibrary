@@ -33,11 +33,11 @@ CircleLeapGestureArea::CircleLeapGestureArea(QQuickItem *parent)
 {
 }
 
-void CircleLeapGestureArea::updateGestures(QList<QtLeapGesture *> gestures)
+void CircleLeapGestureArea::updateGestures(QList<QObject *> gestures)
 {
-    foreach (QtLeapGesture *gesture, gestures)
+    foreach (QObject *gesture, gestures)
     {
-        QtLeapMotion::QtLeapCircleGesture *circleGesture = static_cast<QtLeapMotion::QtLeapCircleGesture*>(gesture);
+        QtLeapMotion::QtLeapCircleGesture *circleGesture = qobject_cast<QtLeapMotion::QtLeapCircleGesture*>(gesture);
 
         if (circleGesture &&
                 circleGesture->getState() !=

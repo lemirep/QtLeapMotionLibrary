@@ -33,14 +33,15 @@ SwipeLeapGestureArea::SwipeLeapGestureArea(QQuickItem *parent)
 {
 }
 
-void SwipeLeapGestureArea::updateGestures(QList<QtLeapGesture *> gestures)
+void SwipeLeapGestureArea::updateGestures(QList<QObject *> gestures)
 {
-    foreach (QtLeapGesture *gesture, gestures)
+    foreach (QObject *gesture, gestures)
     {
-        QtLeapMotion::QtLeapSwipeGesture *swipeGesture = static_cast<QtLeapMotion::QtLeapSwipeGesture*>(gesture);
+        QtLeapMotion::QtLeapSwipeGesture *swipeGesture = qobject_cast<QtLeapMotion::QtLeapSwipeGesture*>(gesture);
         if (swipeGesture &&
                 swipeGesture->getState() !=
                 QtLeapMotion::QtLeapSwipeGesture::GestureInvalid)
+        {
             switch (swipeGesture->getState())
             {
             case QtLeapMotion::QtLeapSwipeGesture::GestureUpdated:
@@ -57,6 +58,7 @@ void SwipeLeapGestureArea::updateGestures(QList<QtLeapGesture *> gestures)
             default:
                 return;
             };
+        }
     }
 }
 

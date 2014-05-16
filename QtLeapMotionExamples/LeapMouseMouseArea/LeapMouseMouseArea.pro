@@ -57,5 +57,5 @@ linux-g++-32 {
 }
 
 #linux-g++-64 {
-    LIBS += -L../../QtLeapMotion/Leap/x64/ -lLeap
     LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+    LIBS += -L../../QtLeapMotion/Leap/x64/ -lLeap

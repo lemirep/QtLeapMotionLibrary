@@ -15,7 +15,7 @@ Here what you should have on a Linux 64 bits machine :
 QtLeapMotionLibrary/QtLeapMotion/Leap/include/Leap.h
 QtLeapMotionLibrary/QtLeapMotion/Leap/include/Leap.i
 QtLeapMotionLibrary/QtLeapMotion/Leap/include/LeapMath.h
-QtLeapMotionLibrary/QtLeapMotion/Leap/libLeap.so
+QtLeapMotionLibrary/QtLeapMotion/Leap/x64/libLeap.so
 
 The SDK can be obtained here : https://www.leapmotion.com/developers (you have
 to sign up though)

@@ -27,7 +27,7 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
 #        LeapCircleGesture \
-#        LeapSwipeGesture \
 #        LeapTapGesture \
+        LeapSwipeGesture \
         LeapMouseMouseArea \
         LeapTouchMouseArea

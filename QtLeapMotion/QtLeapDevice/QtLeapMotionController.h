@@ -64,6 +64,7 @@ public:
     void    setMouseHandler(QtLeapMouseHandlerInterface *mouseHandler);
     void    addGestureHandler(QtLeapGestureHandlerInterface *gestureHandler);
     void    setHandHandler(QtLeapHandsHandlerInterface *handHandler);
+    void    init();
 
 public slots:
 

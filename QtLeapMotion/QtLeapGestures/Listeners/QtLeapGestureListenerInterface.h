@@ -27,7 +27,7 @@
 #define QTLEAPGESTURELISTENERINTERFACE_H
 
 #include <QtLeapGlobal/QtLeapGlobal.h>
-
+#include <QObject>
 
 namespace QtLeapMotion
 {
@@ -38,7 +38,7 @@ class QTLEAPMOTION_EXPORT QtLeapGestureListenerInterface
 {
 public :
     virtual ~QtLeapGestureListenerInterface() {}
-    virtual void    updateGestures(QList<QtLeapGesture *> gestures) = 0;
+    virtual void    updateGestures(QList<QObject *> gestures) = 0;
 };
 
 } // QtLeapMotion

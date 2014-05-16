@@ -26,6 +26,7 @@
 #include "DefaultQtLeapSwipeGestureHandler.h"
 #include "QtLeapGestureListenerInterface.h"
 #include "QtLeapSwipeGesture.h"
+#include <QDebug>
 
 namespace QtLeapMotion
 {
@@ -47,7 +48,7 @@ void DefaultQtLeapSwipeGestureHandler::onInit(const Leap::Controller &controller
 
 void DefaultQtLeapSwipeGestureHandler::setMotionListeners(QList<QtLeapGestureListenerInterface *> listener)
 {
-    this->listeners = listeners;
+    this->listeners = listener;
 }
 
 void DefaultQtLeapSwipeGestureHandler::onFrame(const Leap::Frame &frame)
@@ -63,7 +64,7 @@ void DefaultQtLeapSwipeGestureHandler::onFrame(const Leap::Frame &frame)
             {
                 // Store gestures in a hash to check if they are new or updated
                 if (this->gestures.contains(gesture.id()))
-                    this->gestures[gesture.id()]->update(gesture);
+                    qobject_cast<QtLeapSwipeGesture *>(this->gestures[gesture.id()])->update(gesture);
                 else
                     this->gestures[gesture.id()] = QtLeapSwipeGesture::fromLeapGesture(gesture);
                 validEntries << gesture.id();

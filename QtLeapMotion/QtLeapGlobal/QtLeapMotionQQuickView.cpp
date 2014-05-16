@@ -51,12 +51,18 @@ QtLeapMotionQQuickView::QtLeapMotionQQuickView() :
     touchEnabled(false),
     mouseEnabled(false)
 {
+    qmlRegisterUncreatableType<QtLeapMotion::AbstractGestureArea>("QtLeapMotion", 2, 0, "AbstractGestureArea", "");
     qmlRegisterType<QtLeapMotion::CircleLeapGestureArea>("QtLeapMotion", 2, 0, "CircleGestureArea");
     qmlRegisterType<QtLeapMotion::KeyTapLeapGestureArea>("QtLeapMotion", 2, 0, "KeyTapGestureArea");
     qmlRegisterType<QtLeapMotion::ScreenTapLeapGestureArea>("QtLeapMotion", 2, 0, "ScreenTapGestureArea");
     qmlRegisterType<QtLeapMotion::SwipeLeapGestureArea>("QtLeapMotion", 2, 0, "SwipeGestureArea");
     qmlRegisterType<QtLeapMotion::HandsMotionArea>("QtLeapMotion", 2, 0, "HandsMotionArea");
     qmlRegisterType<QtLeapMotion::FingersMotionArea>("QtLeapMotion", 2, 0, "FingersMotionArea");
+    qmlRegisterUncreatableType<QtLeapMotion::QtLeapSwipeGesture>("QtLeapMotion", 2, 0, "QtLeapSwipeGesture", "");
+//    qmlRegisterUncreatableType<QtLeapMotion::QtLeapTapGesture>("QtLeapMotion", 2, 0, "QtLeapTapGesture", "");
+//    qmlRegisterUncreatableType<QtLeapMotion::QtLeapScreenTapGesture>("QtLeapMotion", 2, 0, "QtLeapScreenTapGesture", "");
+//    qmlRegisterUncreatableType<QtLeapMotion::QtLeapCircleGesture>("QtLeapMotion", 2, 0, "QtLeapCircleGesture", "");
+
 
     this->leapController = QtLeapMotion::QtLeapMotionController::getInstance();
 
@@ -67,6 +73,9 @@ QtLeapMotionQQuickView::QtLeapMotionQQuickView() :
     this->leapController->addGestureHandler(new QtLeapMotion::DefaultQtLeapCircleGestureHandler(this->leapController));
     this->leapController->addGestureHandler(new QtLeapMotion::DefaultQtLeapSwipeGestureHandler(this->leapController));
     this->leapController->addGestureHandler(new QtLeapMotion::DefaultQtLeapTapGestureHandler(this->leapController));
+
+
+    this->leapController->init();
 }
 
 QtLeapMotionQQuickView::~QtLeapMotionQQuickView()

@@ -59,8 +59,8 @@ public:
 
 private:
     QList<QtLeapGestureListenerInterface *> listeners;
-    QHash<int, QtLeapGesture *> kGestures;
-    QHash<int, QtLeapGesture *> sGestures;
+    QHash<int, QObject *> kGestures;
+    QHash<int, QObject *> sGestures;
 
 };
 

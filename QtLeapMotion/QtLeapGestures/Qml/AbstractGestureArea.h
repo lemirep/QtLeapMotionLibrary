@@ -29,6 +29,7 @@
 #include <QHash>
 #include <QSGSimpleRectNode>
 #include <QQuickItem>
+#include <QObject>
 #include <QtLeapGlobal/QtLeapGlobal.h>
 #include <QtLeapGestures/QtLeapGesture.h>
 #include <QtLeapGestures/Listeners/QtLeapGestureListenerInterface.h>
@@ -49,7 +50,7 @@ class QTLEAPMOTION_EXPORT AbstractGestureArea
 public:
     AbstractGestureArea(QQuickItem *parent = 0);
     virtual ~AbstractGestureArea();
-    virtual void updateGestures(QList<QtLeapGesture*> gestures) = 0;
+    virtual void updateGestures(QList<QObject*> gestures) = 0;
 
 protected:
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data);

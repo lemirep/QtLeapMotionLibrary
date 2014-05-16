@@ -27,6 +27,7 @@
 #define QTLEAPGESTURE_H
 
 #include <Leap.h>
+
 #include <QtLeapGestures/QtLeapGesture.h>
 #include <QtLeapGlobal/QtLeapGlobal.h>
 
@@ -36,6 +37,7 @@ namespace QtLeapMotion
 class QTLEAPMOTION_EXPORT QtLeapGesture
 {
 public :
+
     enum GestureState
     {
         GestureStarted = 1,
@@ -53,5 +55,7 @@ public :
 };
 
 } //QtLeapMotion
+
+//Q_DECLARE_INTERFACE(QtLeapMotion::QtLeapGesture, "org.qtproject.QtLeapMotion.QtLeapGesture/1.0")
 
 #endif // QTLEAPGESTURE_H

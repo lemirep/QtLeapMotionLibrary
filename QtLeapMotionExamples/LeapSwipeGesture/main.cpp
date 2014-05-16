@@ -23,42 +23,17 @@
 **
 ****************************************************************************/
 
-#ifndef SCREENTAPLEAPGESTUREAREA_H
-#define SCREENTAPLEAPGESTUREAREA_H
+#include <QGuiApplication>
+#include <QScopedPointer>
+#include <QtLeapGlobal/QtLeapMotionQQuickView.h>
 
-#include <QtLeapGestures/QtLeapScreenTapGesture.h>
-#include <QtLeapGestures/Qml/AbstractGestureArea.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
-
-namespace QtLeapMotion
+int     main(int ac, char **av)
 {
+    QScopedPointer<QGuiApplication> app(new QGuiApplication(ac, av));
+    QtLeapMotion::QtLeapMotionQQuickView *view = new QtLeapMotion::QtLeapMotionQQuickView();
 
-class QTLEAPMOTION_EXPORT ScreenTapLeapGestureArea
-        :
-        public AbstractGestureArea
-{
-    Q_OBJECT
-    Q_PROPERTY(QList<QtLeapMotion::QtLeapTapGesture*> gesturesList READ getGesturesList NOTIFY gesturesListChanged)
-
-    // Have a bounding box in 3D to detect if gesture is inside
-
-public:
-    ScreenTapLeapGestureArea(QQuickItem *parent = 0);
-    void updateGestures(QList<QObject *> gestures);
-    QList<QtLeapMotion::QtLeapTapGesture *> getGesturesList() const;
-
-protected:
-    QHash<int, QtLeapMotion::QtLeapTapGesture *> gesturesHash;
-
-
-signals :
-    void    gesturesListChanged();
-    void    gestureStarted(QtLeapMotion::QtLeapTapGesture *gesture);
-    void    gestureUpdated(QtLeapMotion::QtLeapTapGesture *gesture);
-    void    gestureEnded(QtLeapMotion::QtLeapTapGesture *gesture);
-
-};
-
-} // QtLeapMotion
-
-#endif // SCREENTAPLEAPGESTUREAREA_H
+    view->setSource(QUrl("qrc:/qml/main.qml"));
+    view->setLeapMouseEnabled(true);
+    view->showView();
+    return app->exec();
+}

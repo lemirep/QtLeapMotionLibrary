@@ -72,7 +72,7 @@ public :
     void      setStartPosition(const QVector3D &startPosition);
     void      setSpeed(qreal speed);
     void      update(const Leap::Gesture &gesture);
-    static QtLeapGesture *fromLeapGesture(const Leap::Gesture &gesture);
+    static QtLeapSwipeGesture *fromLeapGesture(const Leap::Gesture &gesture);
 
 signals :
     void directionChanged();

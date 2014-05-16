@@ -145,6 +145,7 @@ void QtLeapSwipeGesture::update(const Leap::Gesture &gesture)
 
     this->setId(swipeGesture.id());
     this->setSpeed(swipeGesture.speed());
+    this->setState(swipeGesture.state());
     this->setDirection(QVector3D(swipeGesture.direction().x,
                                  swipeGesture.direction().y,
                                  swipeGesture.direction().z));
@@ -156,7 +157,7 @@ void QtLeapSwipeGesture::update(const Leap::Gesture &gesture)
                                      swipeGesture.startPosition().z));
 }
 
-QtLeapGesture *QtLeapSwipeGesture::fromLeapGesture(const Leap::Gesture &gesture)
+QtLeapSwipeGesture *QtLeapSwipeGesture::fromLeapGesture(const Leap::Gesture &gesture)
 {
     QtLeapSwipeGesture *swipeGesture = new QtLeapSwipeGesture();
     swipeGesture->update(gesture);

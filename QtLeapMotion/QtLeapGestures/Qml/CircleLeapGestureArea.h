@@ -44,7 +44,7 @@ public:
     CircleLeapGestureArea(QQuickItem *parent = 0);
 
     // Have a bounding box in 3D to detect if hand is inside
-    void updateGestures(QList<QtLeapGesture *> gestures);
+    void updateGestures(QList<QObject *> gestures);
     QList<QtLeapMotion::QtLeapCircleGesture *> getGesturesList() const;
 
 protected:

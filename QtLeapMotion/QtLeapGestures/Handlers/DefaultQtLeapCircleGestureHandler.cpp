@@ -26,6 +26,7 @@
 #include "DefaultQtLeapCircleGestureHandler.h"
 #include "QtLeapGestureListenerInterface.h"
 #include "QtLeapCircleGesture.h"
+#include <QDebug>
 
 namespace QtLeapMotion
 {
@@ -64,7 +65,7 @@ void DefaultQtLeapCircleGestureHandler::onFrame(const Leap::Frame &frame)
             {
                 // Store gestures in a hash to check if they are new or updated
                 if (this->gestures.contains(gesture.id()))
-                    this->gestures[gesture.id()]->update(gesture);
+                    qobject_cast<QtLeapCircleGesture *>(this->gestures[gesture.id()])->update(gesture);
                 else
                     this->gestures[gesture.id()] = QtLeapCircleGesture::fromLeapGesture(gesture);
                 validEntries << gesture.id();

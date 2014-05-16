@@ -76,7 +76,7 @@ public :
     void      setRadius(qreal radius);
     void      setTurns(qreal turns);
 
-    static QtLeapGesture *fromLeapGesture(const Leap::Gesture &gesture);
+    static QtLeapCircleGesture *fromLeapGesture(const Leap::Gesture &gesture);
     void      update(const Leap::Gesture &gesture);
 
 signals :

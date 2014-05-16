@@ -37,6 +37,7 @@ void QtLeapScreenTapGesture::update(const Leap::Gesture &gesture)
 {
     Leap::ScreenTapGesture tapGesture = static_cast<Leap::ScreenTapGesture>(gesture);
     this->setId(tapGesture.id());
+    this->setState(gesture.state());
     this->setDirection(QVector3D(tapGesture.direction().x,
                                tapGesture.direction().y,
                                tapGesture.direction().x));
@@ -46,7 +47,7 @@ void QtLeapScreenTapGesture::update(const Leap::Gesture &gesture)
     this->setState(tapGesture.state());
 }
 
-QtLeapGesture *QtLeapScreenTapGesture::fromLeapGesture(const Leap::Gesture &gesture)
+QtLeapScreenTapGesture *QtLeapScreenTapGesture::fromLeapGesture(const Leap::Gesture &gesture)
 {
     QtLeapScreenTapGesture *tapGesture = new QtLeapScreenTapGesture();
     tapGesture->update(gesture);

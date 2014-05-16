@@ -42,8 +42,6 @@ QtLeapMotionController::QtLeapMotionController(QObject *parent) : QObject(parent
 {
     this->leapController = new Leap::Controller();
     this->leapListener = new QtLeapMotionListener();
-    // ADD LISTENER TO LEAP CONTROLLER
-    this->leapController->addListener(*this->leapListener);
 }
 
 QtLeapMotionController::~QtLeapMotionController()
@@ -81,9 +79,14 @@ void QtLeapMotionController::setHandHandler(QtLeapHandsHandlerInterface *handler
     this->leapListener->setHandHandler(handler);
 }
 
+void QtLeapMotionController::init()
+{
+    // ADD LISTENER TO LEAP CONTROLLER
+    this->leapController->addListener(*this->leapListener);
+}
+
 void QtLeapMotionController::registerMouseListener(QObject *listener)
 {
-    qDebug() << Q_FUNC_INFO;
     this->leapListener->registerMouseListener(listener);
 }
 

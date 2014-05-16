@@ -33,11 +33,11 @@ ScreenTapLeapGestureArea::ScreenTapLeapGestureArea(QQuickItem *parent)
 {
 }
 
-void ScreenTapLeapGestureArea::updateGestures(QList<QtLeapGesture *> gestures)
+void ScreenTapLeapGestureArea::updateGestures(QList<QObject *> gestures)
 {
-    foreach (QtLeapGesture *gesture, gestures)
+    foreach (QObject *gesture, gestures)
     {
-        QtLeapMotion::QtLeapTapGesture *screenTapGesture = static_cast<QtLeapMotion::QtLeapTapGesture*>(gesture);
+        QtLeapMotion::QtLeapTapGesture *screenTapGesture = qobject_cast<QtLeapMotion::QtLeapTapGesture*>(gesture);
 
         if (screenTapGesture &&
                 screenTapGesture->getState() !=

@@ -67,7 +67,7 @@ void DefaultQtLeapTapGestureHandler::onFrame(const Leap::Frame &frame)
                 if (gesture.type() == Leap::Gesture::TYPE_KEY_TAP)
                 {
                     if (this->kGestures.contains(gesture.id()))
-                        this->kGestures[gesture.id()]->update(gesture);
+                        qobject_cast<QtLeapKeyTapGesture*>(this->kGestures[gesture.id()])->update(gesture);
                     else
                         this->kGestures[gesture.id()] = QtLeapKeyTapGesture::fromLeapGesture(gesture);
                     validKEntries << gesture.id();
@@ -75,7 +75,7 @@ void DefaultQtLeapTapGestureHandler::onFrame(const Leap::Frame &frame)
                 else if (gesture.type() == Leap::Gesture::TYPE_SCREEN_TAP)
                 {
                     if (this->sGestures.contains(gesture.id()))
-                        this->sGestures[gesture.id()]->update(gesture);
+                        qobject_cast<QtLeapScreenTapGesture*>(this->sGestures[gesture.id()])->update(gesture);
                     else
                         this->sGestures[gesture.id()] = QtLeapScreenTapGesture::fromLeapGesture(gesture);
                     validSEntries << gesture.id();
@@ -88,7 +88,7 @@ void DefaultQtLeapTapGestureHandler::onFrame(const Leap::Frame &frame)
         foreach (const int idx, this->kGestures.keys())
             if (!validKEntries.contains(idx))
                 this->kGestures.remove(idx);
-        QList<QtLeapGesture *> gestures = this->sGestures.values() + this->kGestures.values();
+        QList<QObject *> gestures = this->sGestures.values() + this->kGestures.values();
         foreach (QtLeapGestureListenerInterface *listener, this->listeners)
             listener->updateGestures(gestures);
     }

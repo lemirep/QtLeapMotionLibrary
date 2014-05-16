@@ -56,7 +56,7 @@ void AbstractGestureArea::itemChange(QQuickItem::ItemChange, const QQuickItem::I
 {
     QtLeapMotionQQuickView *win = Q_NULLPTR;
 
-    if ((qobject_cast<QtLeapMotionQQuickView *>(this->window())) != Q_NULLPTR)
+    if ((win = qobject_cast<QtLeapMotionQQuickView *>(this->window())) != Q_NULLPTR)
         win->getLeapController()->registerGestureListener(this);
 }
 

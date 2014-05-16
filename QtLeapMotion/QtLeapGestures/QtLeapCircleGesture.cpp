@@ -153,7 +153,7 @@ void QtLeapCircleGesture::setTurns(qreal turns)
     }
 }
 
-QtLeapGesture *QtLeapCircleGesture::fromLeapGesture(const Leap::Gesture &gesture)
+QtLeapCircleGesture *QtLeapCircleGesture::fromLeapGesture(const Leap::Gesture &gesture)
 {
     QtLeapCircleGesture *circleGesture = new QtLeapCircleGesture();
     circleGesture->update(gesture);
@@ -165,6 +165,7 @@ void QtLeapCircleGesture::update(const Leap::Gesture &gesture)
     Leap::CircleGesture leapGesture = static_cast<Leap::CircleGesture>(gesture);
 
     this->setId(leapGesture.id());
+    this->setState(leapGesture.state());
     this->setCenter(QVector3D(leapGesture.center().x,
                                        leapGesture.center().y,
                                        leapGesture.center().z));

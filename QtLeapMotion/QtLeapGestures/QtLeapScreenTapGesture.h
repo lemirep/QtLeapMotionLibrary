@@ -40,7 +40,7 @@ public:
 
     // QtLeapGesture interface
     void update(const Leap::Gesture &gesture);
-    static QtLeapGesture *fromLeapGesture(const Leap::Gesture &gesture);
+    static QtLeapScreenTapGesture *fromLeapGesture(const Leap::Gesture &gesture);
 };
 
 }

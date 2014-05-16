@@ -48,7 +48,7 @@ class QTLEAPMOTION_EXPORT SwipeLeapGestureArea
 
 public:
     SwipeLeapGestureArea(QQuickItem *parent = 0);
-    void updateGestures(QList<QtLeapGesture *> gesture);
+    void updateGestures(QList<QObject *> gesture);
     QList<QtLeapMotion::QtLeapSwipeGesture *> getGesturesList() const;
 
 protected:

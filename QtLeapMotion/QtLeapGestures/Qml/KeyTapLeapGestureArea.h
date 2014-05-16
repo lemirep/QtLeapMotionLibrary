@@ -44,7 +44,7 @@ class QTLEAPMOTION_EXPORT KeyTapLeapGestureArea
 
 public:
     KeyTapLeapGestureArea(QQuickItem *parent = 0);
-    void updateGestures(QList<QtLeapGesture *> gestures);
+    void updateGestures(QList<QObject *> gestures);
     QList<QtLeapMotion::QtLeapTapGesture *> getGesturesList() const;
 
 protected:
