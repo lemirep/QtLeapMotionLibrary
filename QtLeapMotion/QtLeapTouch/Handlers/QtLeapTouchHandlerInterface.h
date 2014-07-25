@@ -43,6 +43,10 @@ public :
 
 } // QtLeapMotion
 
+QT_BEGIN_NAMESPACE
+
 Q_DECLARE_INTERFACE(QtLeapMotion::QtLeapTouchHandlerInterface, "org.qtproject.QtLeapMotion.QtLeapTouchHandlerInterface/1.0")
+
+QT_END_NAMESPACE
 
 #endif // __LEAPTOUCHHANDLERINTERFACE_H__

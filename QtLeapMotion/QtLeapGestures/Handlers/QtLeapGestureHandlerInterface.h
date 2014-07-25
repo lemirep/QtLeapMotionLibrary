@@ -47,6 +47,10 @@ public:
 
 }
 
+QT_BEGIN_NAMESPACE
+
 Q_DECLARE_INTERFACE(QtLeapMotion::QtLeapGestureHandlerInterface, "org.qtproject.QtLeapMotion.QtLeapGestureHandlerInterface/1.0")
+
+QT_END_NAMESPACE
 
 #endif //__LEAPGESTUREHANDLERINTERFACE_H__

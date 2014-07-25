@@ -42,6 +42,10 @@ public:
 
 } // QtLeapMotion
 
+QT_BEGIN_NAMESPACE
+
 Q_DECLARE_INTERFACE(QtLeapMotion::QtLeapFingersListenerInterface, "org.qtproject.QtLeapMotion.QtLeapFingersListenerInterface/1.0")
+
+QT_END_NAMESPACE
 
 #endif // QTLEAPFINGERSLISTENERINTERFACE_H

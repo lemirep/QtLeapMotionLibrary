@@ -46,6 +46,10 @@ public:
 
 } // QtLeapMotion
 
+QT_BEGIN_NAMESPACE
+
 Q_DECLARE_INTERFACE(QtLeapMotion::QtLeapMouseHandlerInterface, "org.qtproject.QtLeapMotion.QtLeapMouseHandlerInterface/1.0")
+
+QT_END_NAMESPACE
 
 #endif // __LEAPMOUSEHANDLERINTERFACE_H__

@@ -23,8 +23,8 @@
 **
 ****************************************************************************/
 
-#ifndef __LEAPFINGER_H__
-#define __LEAPFINGER_H__
+#ifndef QTLEAPMOTION_LEAPFINGER_H__
+#define QTLEAPMOTION_LEAPFINGER_H__
 
 #include <QObject>
 #include <QtLeapGlobal/QtLeapPointable.h>

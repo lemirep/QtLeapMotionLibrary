@@ -46,6 +46,10 @@ public :
 
 }
 
+QT_BEGIN_NAMESPACE
+
 Q_DECLARE_INTERFACE(QtLeapMotion::QtLeapMotionHandler, "org.qtproject.QtLeapMotion.QtLeapMotionHandler/1.0")
+
+QT_END_NAMESPACE
 
 #endif // QTLEAPMOTIONHANDLER_H
