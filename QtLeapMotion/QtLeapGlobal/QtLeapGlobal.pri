@@ -31,7 +31,8 @@ SOURCES += $$PWD/QtLeapFinger.cpp \
            $$PWD/Handlers/DefaultQtLeapHandsHandler.cpp \
            $$PWD/Qml/HandsMotionArea.cpp \
            $$PWD/Qml/FingersMotionArea.cpp \
-           $$PWD/QtLeapMotionQQuickView.cpp
+           $$PWD/QtLeapMotionQQuickView.cpp \
+           $$PWD/QtLeapBone.cpp
 
 
 HEADERS += $$PWD/QtLeapFinger.h \
@@ -47,7 +48,8 @@ HEADERS += $$PWD/QtLeapFinger.h \
            $$PWD/Qml/HandsMotionArea.h \
            $$PWD/Qml/FingersMotionArea.h \
            $$PWD/QtLeapMotionQQuickView.h \
-           $$PWD/QtLeapGlobal.h
+           $$PWD/QtLeapGlobal.h \
+           $$PWD/QtLeapBone.h
 
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/Handlers
