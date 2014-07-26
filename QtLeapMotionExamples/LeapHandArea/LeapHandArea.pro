@@ -24,7 +24,7 @@
 #****************************************************************************/
 
 TEMPLATE = app
-TARGET = LeapMouseMouseArea
+TARGET = LeapHandArea
 
 QT += quick qml
 

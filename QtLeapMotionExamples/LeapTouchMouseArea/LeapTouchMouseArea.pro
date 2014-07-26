@@ -51,19 +51,15 @@ win32: {
     }
 }
 
-linux-g++-32 {
-    LIBS += -L../../QtLeapMotion/Leap/x86/ -lLeap
-    LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+linux-g++: {
+    !contains(QMAKE_HOST.arch, x86_64) {
+        LIBS += -L../../QtLeapMotion/Leap/x86/ -lLeap
+        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+    } else {
+        message("x86_64 build")
+        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+        LIBS += -L../../QtLeapMotion/Leap/x64/ -lLeap
+    }
 }
-
-#linux-g++-64 {
-    LIBS += -L../../QtLeapMotion/Leap/x64/ -lLeap
-    LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
-#}
-
-#linux : {
-#    QMAKE_LFLAGS += -Wl,--rpath=$$PWD
-#    QMAKE_RPATH=
-#}
 
 win32:DESTDIR = ./

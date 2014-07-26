@@ -38,110 +38,90 @@ Rectangle
         id : swipeArea
         anchors.fill: parent
 
-        property int currentGestureId;
-        property bool hasGesture : false
+        property int currentGestureId : -1;
 
         onGestureStarted:
         {
-            if (!hasGesture)
+            if (currentGestureId === -1)
             {
-                hasGesture = true;
                 currentGestureId = gesture.id
-                console.log("Gesture started" + gesture + gesture.id + gesture.direction);
+//                console.log("Gesture started" + gesture + gesture.id + gesture.direction);
             }
-
         }
 
         onGestureUpdated:
         {
-            if (gesture.id === currentGestureId)
-                console.log("Gesture updated" + gesture + gesture.id + gesture.direction);
+            if (gesture.id === currentGestureId) {
+//                console.log("Gesture updated" + gesture + gesture.id + gesture.direction);
+                console.log(gesture.speed)
+                if (gesture.speed > 200)
+                {
+                    console.log(gesture.startPosition.x + " " + gesture.position.x);
+                    var rightToLeft = gesture.startPosition.x < gesture.position.x;
+                    if (rightToLeft)
+                        pathview.incrementCurrentIndex();
+                    else
+                        pathview.decrementCurrentIndex();
+                    currentGestureId = -1;
+                }
+            }
         }
 
         onGestureEnded:
         {
-            if (gesture.id === currentGestureId)
+            if (currentGestureId !== -1)
             {
-                hasGesture = false;
-                currentGestureId : -1
-                console.log("Gesture Ended " + gesture + gesture.id)
+                currentGestureId = -1
+//                console.log("Gesture Ended " + gesture + gesture.id)
             }
         }
     }
 
-    Rectangle
+    ListModel
     {
-        height : parent.height * 0.4
-        width : parent.width * 0.4
-        color : "red"
-        scale : rec1_ma.pressed ? 0.9 : 1
-        anchors
-        {
-            left : parent.left
-            top : parent.top
-            margins : 50
-        }
-        MouseArea
-        {
-            id : rec1_ma
-            anchors.fill: parent
-        }
+        id : pathModel
+        ListElement { color : "red" }
+        ListElement { color : "blue" }
+        ListElement { color : "violet" }
+        ListElement { color : "green" }
+        ListElement { color : "yellow" }
+        ListElement { color : "orange" }
+        ListElement { color : "black" }
     }
 
-    Rectangle
+    PathView
     {
-        height : parent.height * 0.4
-        width : parent.width * 0.4
-        color : "orange"
-        scale : rec2_ma.pressed ? 0.9 : 1
+        id : pathview
         anchors
         {
-            right : parent.right
-            top : parent.top
-            margins : 50
+            fill : parent
         }
-        MouseArea
-        {
-            id : rec2_ma
-            anchors.fill: parent
-        }
-    }
+        model : pathModel
 
-    Rectangle
-    {
-        height : parent.height * 0.4
-        width : parent.width * 0.4
-        color : "yellow"
-        scale : rec3_ma.pressed ? 0.9 : 1
-        anchors
-        {
-            left : parent.left
-            bottom : parent.bottom
-            margins : 50
-        }
-        MouseArea
-        {
-            id : rec3_ma
-            anchors.fill: parent
-        }
-    }
+        preferredHighlightBegin: 0.5
+        preferredHighlightEnd:  0.55
+        path : Path {
+            startX : 0
+            startY: pathview.height * 0.5
 
-    Rectangle
-    {
-        height : parent.height * 0.4
-        width : parent.width * 0.4
-        color : "blue"
-        scale : rec4_ma.pressed ? 0.9 : 1
-        anchors
-        {
-            right : parent.right
-            bottom : parent.bottom
-            margins : 50
+            PathCurve { x : pathview.width * 0.5; y : pathview.height * 0.3 }
+            PathCurve { x : pathview.width; y : pathview.height * 0.5 }
         }
-        MouseArea
-        {
-            id : rec4_ma
-            anchors.fill: parent
+
+        delegate : Component {
+            Rectangle
+            {
+                color : model.color
+                radius : 25
+                width : 150
+                height : 150
+                //                anchors.centerIn: parent
+                border
+                {
+                    width : PathView.isCurrentItem ? 5 : 0
+                    color : "white"
+                }
+            }
         }
     }
 }

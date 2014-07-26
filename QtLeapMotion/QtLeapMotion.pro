@@ -55,12 +55,13 @@ win32: {
     }
 }
 
-linux-g++-32 {
-    LIBS += -L$$PWD/Leap/x86/ -lLeap
-}
-
-linux-g++-64 {
-    LIBS += -L$$PWD/Leap/x64/ -lLeap
+linux-g++: {
+    !contains(QMAKE_HOST.arch, x86_64) {
+        LIBS += -L$$PWD/Leap/x86/ -lLeap
+    } else {
+        message("x86_64 build")
+        LIBS += -L$$PWD/Leap/x64/ -lLeap
+    }
 }
 
 

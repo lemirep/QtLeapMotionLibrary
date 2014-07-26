@@ -23,48 +23,17 @@
 **
 ****************************************************************************/
 
-#ifndef HANDSMOTIONAREA_H
-#define HANDSMOTIONAREA_H
+#include <QGuiApplication>
+#include <QScopedPointer>
+#include <QtLeapGlobal/QtLeapMotionQQuickView.h>
 
-#include <QQuickItem>
-#include <QtLeapGlobal/Listeners/QtLeapHandsListenerInterface.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
-
-
-namespace QtLeapMotion
+int     main(int ac, char **av)
 {
+    QScopedPointer<QGuiApplication> app(new QGuiApplication(ac, av));
+    QtLeapMotion::QtLeapMotionQQuickView *view = new QtLeapMotion::QtLeapMotionQQuickView();
 
-class QtLeapHand;
-
-class QTLEAPMOTION_EXPORT HandsMotionArea :
-        public QQuickItem,
-        public QtLeapHandsListenerInterface
-{
-    Q_OBJECT
-    Q_INTERFACES(QtLeapMotion::QtLeapHandsListenerInterface)
-    Q_PROPERTY(QList<QtLeapMotion::QtLeapHand *> hands READ getHands NOTIFY handsChanged)
-public:
-    HandsMotionArea(QQuickItem *parent = 0);
-
-    // Have a bounding box in 3D to detect if hand is inside
-
-    // QtLeapHandsListenerInterface interface
-    void updateHands(QList<QtLeapHand *> handsList);
-    QList<QtLeapHand *> getHands() const;
-
-protected:
-    QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *data);
-    void itemChange(ItemChange, const ItemChangeData &);
-
-signals:
-    void handsChanged();
-    void handAdded();
-    void handRemoved();
-
-private:
-    QList<QtLeapHand*> m_hands;
-};
-
+    view->setSource(QUrl("qrc:/qml/main.qml"));
+    view->setLeapMouseEnabled(true);
+    view->showView();
+    return app->exec();
 }
-
-#endif // HANDSMOTIONAREA_H

@@ -30,4 +30,5 @@ SUBDIRS = \
 #        LeapTapGesture \
         LeapSwipeGesture \
         LeapMouseMouseArea \
-        LeapTouchMouseArea
+        LeapTouchMouseArea \
+        LeapHandArea

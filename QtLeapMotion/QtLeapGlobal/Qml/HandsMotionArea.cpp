@@ -65,7 +65,7 @@ void HandsMotionArea::itemChange(QQuickItem::ItemChange, const QQuickItem::ItemC
 {
     QtLeapMotionQQuickView *win = Q_NULLPTR;
 
-    if ((qobject_cast<QtLeapMotionQQuickView *>(this->window())) != Q_NULLPTR)
+    if ((win = qobject_cast<QtLeapMotionQQuickView *>(this->window())) != Q_NULLPTR)
         win->getLeapController()->registerHandListener(this);
 }
 
