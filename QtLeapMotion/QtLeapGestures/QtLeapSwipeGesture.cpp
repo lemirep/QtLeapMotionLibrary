@@ -28,58 +28,90 @@
 namespace QtLeapMotion
 {
 
-QtLeapSwipeGesture::QtLeapSwipeGesture(QObject *parent) :
-    QObject(parent),
-    m_state(QtLeapSwipeGesture::GestureInvalid),
-    m_direction(0,0,0),
-    m_position(0,0,0),
-    m_startPosition(0,0,0),
-    m_speed(0),
-    m_id(0)
-
+class QtLeapSwipeGesturePrivate
 {
+public:
+    QtLeapSwipeGesturePrivate(QtLeapSwipeGesture *qq)
+        : m_state(QtLeapSwipeGesture::GestureInvalid)
+        , m_direction(0,0,0)
+        , m_position(0,0,0)
+        , m_startPosition(0,0,0)
+        , m_speed(0)
+        , m_id(0)
+        , q_ptr(qq)
+    {
+    }
+
+    Q_DECLARE_PUBLIC(QtLeapSwipeGesture)
+
+    QtLeapSwipeGesture::GestureState m_state;
+    QVector3D m_direction;
+    QVector3D m_position;
+    QVector3D m_startPosition;
+    qreal     m_speed;
+    int       m_id;
+    QtLeapSwipeGesture *q_ptr;
+};
+
+QtLeapSwipeGesture::QtLeapSwipeGesture(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QtLeapSwipeGesturePrivate(this))
+{
+}
+
+QtLeapSwipeGesture::~QtLeapSwipeGesture()
+{
+    delete d_ptr;
 }
 
 QtLeapSwipeGesture::GestureState QtLeapSwipeGesture::getState() const
 {
-    return this->m_state;
+    Q_D(const QtLeapSwipeGesture);
+    return d->m_state;
 }
 
 QVector3D QtLeapSwipeGesture::getDirection() const
 {
-    return this->m_direction;
+    Q_D(const QtLeapSwipeGesture);
+    return d->m_direction;
 }
 
 QVector3D QtLeapSwipeGesture::getPosition() const
 {
-    return this->m_position;
+    Q_D(const QtLeapSwipeGesture);
+    return d->m_position;
 }
 
 QVector3D QtLeapSwipeGesture::getStartPosition() const
 {
-    return this->m_startPosition;
+    Q_D(const QtLeapSwipeGesture);
+    return d->m_startPosition;
 }
 
 qreal QtLeapSwipeGesture::getSpeed() const
 {
-    return this->m_speed;
+    Q_D(const QtLeapSwipeGesture);
+    return d->m_speed;
 }
 
 int QtLeapSwipeGesture::getId() const
 {
-    return this->m_id;
+    Q_D(const QtLeapSwipeGesture);
+    return d->m_id;
 }
 
 void QtLeapSwipeGesture::setId(int id)
 {
-    this->m_id = id;
+    Q_D(QtLeapSwipeGesture);
+    d->m_id = id;
 }
 
 void QtLeapSwipeGesture::setState(QtLeapSwipeGesture::GestureState state)
 {
-    if (state != this->m_state)
+    Q_D(QtLeapSwipeGesture);
+    if (state != d->m_state)
     {
-        this->m_state = state;
+        d->m_state = state;
         emit stateChanged();
     }
 }
@@ -105,36 +137,40 @@ void QtLeapSwipeGesture::setState(Leap::Gesture::State state)
 
 void QtLeapSwipeGesture::setDirection(const QVector3D &direction)
 {
-    if (direction != this->m_direction)
+    Q_D(QtLeapSwipeGesture);
+    if (direction != d->m_direction)
     {
-        this->m_direction = direction;
+        d->m_direction = direction;
         emit directionChanged();
     }
 }
 
 void QtLeapSwipeGesture::setPosition(const QVector3D &position)
 {
-    if (position != this->m_position)
+    Q_D(QtLeapSwipeGesture);
+    if (position != d->m_position)
     {
-        this->m_position = position;
+        d->m_position = position;
         emit positionChanged();
     }
 }
 
 void QtLeapSwipeGesture::setStartPosition(const QVector3D &startPosition)
 {
-    if (startPosition != this->m_startPosition)
+    Q_D(QtLeapSwipeGesture);
+    if (startPosition != d->m_startPosition)
     {
-        this->m_startPosition = startPosition;
+        d->m_startPosition = startPosition;
         emit startPositionChanged();
     }
 }
 
 void QtLeapSwipeGesture::setSpeed(qreal speed)
 {
-    if (speed != this->m_speed)
+    Q_D(QtLeapSwipeGesture);
+    if (speed != d->m_speed)
     {
-        this->m_speed = speed;
+        d->m_speed = speed;
         emit speedChanged();
     }
 }

@@ -41,6 +41,8 @@ class QTLEAPMOTION_EXPORT QtLeapTool : public QtLeapPointable
 public:
     QtLeapTool(Leap::Pointable *pointable, QtLeapHand *parent);
     virtual ~QtLeapTool();
+
+    void update(Leap::Pointable *pointable) Q_DECL_OVERRIDE;
 };
 
 }

@@ -36,6 +36,7 @@ namespace QtLeapMotion
 {
 
 class QtLeapHand;
+class QtLeapPointablePrivate;
 
 class QTLEAPMOTION_EXPORT QtLeapPointable : public QObject
 {
@@ -49,11 +50,8 @@ class QTLEAPMOTION_EXPORT QtLeapPointable : public QObject
     Q_PROPERTY(float timeVisible READ getTimeVisible NOTIFY timeVisibleChanged)
     Q_PROPERTY(QVector3D position READ getPosition NOTIFY positionChanged)
     Q_PROPERTY(QVector3D direction READ getDirection NOTIFY directionChanged)
-    Q_PROPERTY(QVector3D stabilizedPosition READ getStabilizedPosition NOTIFY stabilizedPositionChanged)
     Q_PROPERTY(QVector3D velocity READ getVelocity NOTIFY velocityChanged)
-    Q_PROPERTY(QVector3D tipPosition READ getTipPosition NOTIFY tipPositionChanged)
-    Q_PROPERTY(QVector3D tipVelocity READ getTipVelocity NOTIFY tipVelocityChanged)
-    Q_PROPERTY(QVector3D stabilizedTipPosition READ getStabilizedTipPosition NOTIFY stabilizedTipPositionChanged)
+    Q_PROPERTY(QVector3D stabilizedPosition READ getStabilizedPosition NOTIFY stabilizedPositionChanged)
     Q_PROPERTY(QtLeapMotion::QtLeapHand *hand READ getHand CONSTANT)
 
 public:
@@ -70,13 +68,11 @@ public:
 
     QVector3D getPosition() const;
     QVector3D getDirection() const;
-    QVector3D getStabilizedPosition() const;
     QVector3D getVelocity() const;
-    QVector3D getTipPosition() const;
-    QVector3D getTipVelocity() const;
-    QVector3D getStabilizedTipPosition() const;
+    QVector3D getStabilizedPosition() const;
 
     QtLeapHand *getHand() const;
+    virtual void update(Leap::Pointable *pointable);
 
     void setHovering(bool hovering);
     void setTouching(bool touching);
@@ -86,33 +82,8 @@ public:
     void setTimeVisible(float timeVisible);
     void setPosition(const QVector3D &position);
     void setDirection(const QVector3D &direction);
-    void setStabilizedPosition(const QVector3D &stabilizedPosition);
     void setVelocity(const QVector3D &velocity);
-    void setTipPosition(const QVector3D &tipPosition);
-    void setTipVelocity(const QVector3D &tipVelocity);
-    void setTipStabilizedPosition(const QVector3D &stabilizedTipPosition);
-
-private:
-
-    int m_id;
-
-    bool m_hovering;
-    bool m_touching;
-
-    float m_width;
-    float m_length;
-    float m_touchDistance;
-    float m_timeVisible;
-
-    QVector3D m_position;
-    QVector3D m_direction;
-    QVector3D m_stabilizedPosition;
-    QVector3D m_velocity;
-    QVector3D m_tipPosition;
-    QVector3D m_tipVelocity;
-    QVector3D m_stabilizedTipPosition;
-
-    QtLeapHand * m_hand;
+    void setStabilizedPosition(const QVector3D &stabilizedPosition);
 
 signals:
     void hoveringChanged();
@@ -125,9 +96,10 @@ signals:
     void directionChanged();
     void stabilizedPositionChanged();
     void velocityChanged();
-    void tipPositionChanged();
-    void tipVelocityChanged();
-    void stabilizedTipPositionChanged();
+
+private:
+    Q_DECLARE_PRIVATE(QtLeapPointable)
+    QtLeapPointablePrivate *d_ptr;
 };
 
 }

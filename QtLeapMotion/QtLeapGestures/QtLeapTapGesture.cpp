@@ -28,63 +28,94 @@
 namespace QtLeapMotion
 {
 
-QtLeapTapGesture::QtLeapTapGesture(QObject *parent) :
-    QObject(parent),
-    m_id(-1),
-    m_direction(0, 0, 0),
-    m_position(0, 0, 0),
-    m_state(GestureInvalid)
+class QtLeapTapGesturePrivate
 {
+public:
+    QtLeapTapGesturePrivate(QtLeapTapGesture *qq)
+        : m_id(-1)
+        , m_direction(0, 0, 0)
+        , m_position(0, 0, 0)
+        , m_state(QtLeapTapGesture::GestureInvalid)
+        , q_ptr(qq)
+    {
+    }
+
+    Q_DECLARE_PUBLIC(QtLeapTapGesture)
+
+    int m_id;
+    QVector3D m_direction;
+    QVector3D m_position;
+    QtLeapGesture::GestureState m_state;
+    QtLeapTapGesture *q_ptr;
+};
+
+QtLeapTapGesture::QtLeapTapGesture(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QtLeapTapGesturePrivate(this))
+{
+}
+
+QtLeapTapGesture::~QtLeapTapGesture()
+{
+    delete d_ptr;
 }
 
 int QtLeapTapGesture::getId() const
 {
-    return this->m_id;
+    Q_D(const QtLeapTapGesture);
+    return d->m_id;
 }
 
 QVector3D QtLeapTapGesture::getDirection() const
 {
-    return this->m_direction;
+    Q_D(const QtLeapTapGesture);
+    return d->m_direction;
 }
 
 QVector3D QtLeapTapGesture::getPosition() const
 {
-    return this->m_position;
+    Q_D(const QtLeapTapGesture);
+    return d->m_position;
 }
 
 QtLeapTapGesture::GestureState QtLeapTapGesture::getState() const
 {
-    return this->m_state;
+    Q_D(const QtLeapTapGesture);
+    return d->m_state;
 }
 
 void QtLeapTapGesture::setId(int id)
 {
-    this->m_id = id;
+    Q_D(QtLeapTapGesture);
+    d->m_id = id;
 }
 
 void QtLeapTapGesture::setPosition(const QVector3D position)
 {
-    if (position != this->m_position)
+    Q_D(QtLeapTapGesture);
+    if (position != d->m_position)
     {
-        this->m_position = position;
+        d->m_position = position;
         emit positionChanged();
     }
 }
 
 void QtLeapTapGesture::setDirection(const QVector3D direction)
 {
-    if (direction != this->m_direction)
+    Q_D(QtLeapTapGesture);
+    if (direction != d->m_direction)
     {
-        this->m_direction = direction;
+        d->m_direction = direction;
         emit directionChanged();
     }
 }
 
 void QtLeapTapGesture::setState(QtLeapTapGesture::GestureState state)
 {
-    if (this->m_state != state)
+    Q_D(QtLeapTapGesture);
+    if (d->m_state != state)
     {
-        this->m_state = state;
+        d->m_state = state;
         emit stateChanged();
     }
 }

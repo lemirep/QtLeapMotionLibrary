@@ -28,72 +28,108 @@
 namespace QtLeapMotion
 {
 
-QtLeapCircleGesture::QtLeapCircleGesture(QObject *parent) :
-    QObject(parent),
-    m_id(0),
-    m_center(0,0,0),
-    m_normal(0,0,0),
-    m_radius(0),
-    m_turns(0),
-    m_state(QtLeapCircleGesture::GestureInvalid),
-    m_clockwise(true)
+class QtLeapCircleGesturePrivate
 {
+public:
+    QtLeapCircleGesturePrivate(QtLeapCircleGesture *qq)
+        : m_id(0)
+        , m_center(0,0,0)
+        , m_normal(0,0,0)
+        , m_radius(0)
+        , m_turns(0)
+        , m_state(QtLeapCircleGesture::GestureInvalid)
+        , m_clockwise(true)
+        , q_ptr(qq)
+    {
+    }
+
+    Q_DECLARE_PUBLIC(QtLeapCircleGesture)
+
+    int m_id;
+    QVector3D m_center;
+    QVector3D m_normal;
+    qreal m_radius;
+    qreal m_turns;
+    QtLeapGesture::GestureState m_state;
+    bool m_clockwise;
+    QtLeapCircleGesture *q_ptr;
+};
+
+QtLeapCircleGesture::QtLeapCircleGesture(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QtLeapCircleGesturePrivate(this))
+{
+}
+
+QtLeapCircleGesture::~QtLeapCircleGesture()
+{
+    delete d_ptr;
 }
 
 QtLeapCircleGesture::GestureState QtLeapCircleGesture::getState() const
 {
-    return this->m_state;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_state;
 }
 
 QVector3D QtLeapCircleGesture::getCenter() const
 {
-    return this->m_center;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_center;
 }
 
 QVector3D QtLeapCircleGesture::getNormal() const
 {
-    return this->m_normal;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_normal;
 }
 
 qreal QtLeapCircleGesture::getRadius() const
 {
-    return this->m_radius;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_radius;
 }
 
 qreal QtLeapCircleGesture::getTurns() const
 {
-    return this->m_turns;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_turns;
 }
 
 bool QtLeapCircleGesture::getClockwise() const
 {
-    return this->m_clockwise;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_clockwise;
 }
 
 int QtLeapCircleGesture::getId() const
 {
-    return this->m_id;
+    Q_D(const QtLeapCircleGesture);
+    return d->m_id;
 }
 
 void QtLeapCircleGesture::setId(int id)
 {
-    this->m_id = id;
+    Q_D(QtLeapCircleGesture);
+    d->m_id = id;
 }
 
 void QtLeapCircleGesture::setClockwise(bool clockwise)
 {
-    if (clockwise != this->m_clockwise)
+    Q_D(QtLeapCircleGesture);
+    if (clockwise != d->m_clockwise)
     {
-        this->m_clockwise = clockwise;
+        d->m_clockwise = clockwise;
         emit clockwiseChanged();
     }
 }
 
 void QtLeapCircleGesture::setState(QtLeapCircleGesture::GestureState state)
 {
-    if (state != this->m_state)
+    Q_D(QtLeapCircleGesture);
+    if (state != d->m_state)
     {
-        this->m_state = state;
+        d->m_state = state;
         emit stateChanged();
     }
 }
@@ -119,36 +155,40 @@ void QtLeapCircleGesture::setState(Leap::Gesture::State state)
 
 void QtLeapCircleGesture::setCenter(const QVector3D &center)
 {
-    if (center != this->m_center)
+    Q_D(QtLeapCircleGesture);
+    if (center != d->m_center)
     {
-        this->m_center = center;
+        d->m_center = center;
         emit centerChanged();
     }
 }
 
 void QtLeapCircleGesture::setNormal(const QVector3D &normal)
 {
-    if (normal != this->m_normal)
+    Q_D(QtLeapCircleGesture);
+    if (normal != d->m_normal)
     {
-        this->m_normal = normal;
+        d->m_normal = normal;
         emit normalChanged();
     }
 }
 
 void QtLeapCircleGesture::setRadius(qreal radius)
 {
-    if (radius != this->m_radius)
+    Q_D(QtLeapCircleGesture);
+    if (radius != d->m_radius)
     {
-        this->m_radius = radius;
+        d->m_radius = radius;
         emit radiusChanged();
     }
 }
 
 void QtLeapCircleGesture::setTurns(qreal turns)
 {
-    if (turns != this->m_turns)
+    Q_D(QtLeapCircleGesture);
+    if (turns != d->m_turns)
     {
-        this->m_turns = turns;
+        d->m_turns = turns;
         emit turnsChanged();
     }
 }
@@ -167,12 +207,12 @@ void QtLeapCircleGesture::update(const Leap::Gesture &gesture)
     this->setId(leapGesture.id());
     this->setState(leapGesture.state());
     this->setCenter(QVector3D(leapGesture.center().x,
-                                       leapGesture.center().y,
-                                       leapGesture.center().z));
+                              leapGesture.center().y,
+                              leapGesture.center().z));
     this->setRadius(leapGesture.radius());
     this->setNormal(QVector3D(leapGesture.normal().x,
-                                       leapGesture.normal().y,
-                                       leapGesture.normal().z));
+                              leapGesture.normal().y,
+                              leapGesture.normal().z));
     this->setTurns(leapGesture.progress());
     this->setClockwise(leapGesture.pointable().direction().angleTo(leapGesture.normal()) <= M_PI / 2);
     this->setState(leapGesture.state());

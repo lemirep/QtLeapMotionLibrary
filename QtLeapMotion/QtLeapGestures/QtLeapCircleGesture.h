@@ -34,6 +34,8 @@
 namespace QtLeapMotion
 {
 
+class QtLeapCircleGesturePrivate;
+
 class QTLEAPMOTION_EXPORT QtLeapCircleGesture : public QObject, public QtLeapGesture
 {
     Q_OBJECT
@@ -46,18 +48,9 @@ class QTLEAPMOTION_EXPORT QtLeapCircleGesture : public QObject, public QtLeapGes
     Q_PROPERTY(GestureState state READ getState NOTIFY stateChanged)
     Q_ENUMS(GestureState)
 
-private:
-    int m_id;
-    QVector3D m_center;
-    QVector3D m_normal;
-    qreal m_radius;
-    qreal m_turns;
-    GestureState m_state;
-    bool m_clockwise;
-
 public :
-
-    QtLeapCircleGesture(QObject *parent = 0);
+    explicit QtLeapCircleGesture(QObject *parent = 0);
+    ~QtLeapCircleGesture();
 
     GestureState getState() const;
     QVector3D getCenter() const;
@@ -87,7 +80,9 @@ signals :
     void    turnsChanged();
     void    clockwiseChanged();
 
-
+private:
+    Q_DECLARE_PRIVATE(QtLeapCircleGesture)
+    QtLeapCircleGesturePrivate *d_ptr;
 };
 
 }

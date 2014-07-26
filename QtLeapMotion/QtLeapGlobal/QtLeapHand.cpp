@@ -27,30 +27,66 @@
 #include "QtLeapPointable.h"
 #include "QtLeapFinger.h"
 #include "QtLeapTool.h"
+#include <QHash>
 
 namespace QtLeapMotion
 {
 
+class QtLeapHandPrivate
+{
+public:
+    QtLeapHandPrivate(QtLeapHand *qq)
+        : m_id(-1)
+        , m_pitch(0)
+        , m_roll(0)
+        , m_yaw(0)
+        , m_timeVisible(0)
+        , m_sphereRadius(0)
+        ,q_ptr(qq)
+    {
+    }
+
+    Q_DECLARE_PUBLIC(QtLeapHand)
+
+    int m_id;
+    float m_pitch;
+    float m_roll;
+    float m_yaw;
+    float m_timeVisible;
+    float m_sphereRadius;
+    bool m_left;
+    bool m_right;
+
+    QVector3D m_direction;
+    QVector3D m_position;
+    QVector3D m_normal;
+    QVector3D m_velocity;
+    QVector3D m_stabilizedPosition;
+    QVector3D m_sphereCenter;
+
+    QHash<int, QtLeapPointable*> m_pointables;
+    QHash<int, QtLeapFinger*> m_fingers;
+    QHash<int, QtLeapTool*> m_tools;
+
+    QtLeapHand *q_ptr;
+};
+
 QtLeapHand::QtLeapHand(QObject *parent)
-    : QObject(parent),
-      m_id(-1),
-      m_pitch(0),
-      m_roll(0),
-      m_yaw(0),
-      m_timeVisible(0),
-      m_sphereRadius(0)
+    : QObject(parent)
+    , d_ptr(new QtLeapHandPrivate(this))
 {
 }
 
 QtLeapHand::~QtLeapHand()
 {
+    delete d_ptr;
 }
 
 QtLeapHand *QtLeapHand::fromLeapHand(Leap::Hand *hand)
 {
     QtLeapHand *nHand = new QtLeapHand();
     nHand->update(hand);
-    nHand->m_id = hand->id();
+    nHand->setId(hand->id());
     return nHand;
 }
 
@@ -61,195 +97,297 @@ void QtLeapHand::update(Leap::Hand *hand)
     this->setYaw(hand->palmPosition().yaw());
     this->setSphereRadius(hand->sphereRadius());
     this->setSphereCenter(QVector3D(hand->sphereCenter().x,
-                                     hand->sphereCenter().y,
-                                     hand->sphereCenter().z));
+                                    hand->sphereCenter().y,
+                                    hand->sphereCenter().z));
     this->setDirection(QVector3D(hand->direction().x,
-                                  hand->direction().y,
-                                  hand->direction().x));
+                                 hand->direction().y,
+                                 hand->direction().x));
     this->setNormal(QVector3D(hand->palmNormal().x,
-                               hand->palmNormal().y,
-                               hand->palmNormal().z));
+                              hand->palmNormal().y,
+                              hand->palmNormal().z));
     this->setVelocity(QVector3D(hand->palmVelocity().x,
-                                 hand->palmVelocity().y,
-                                 hand->palmVelocity().z));
+                                hand->palmVelocity().y,
+                                hand->palmVelocity().z));
     this->setStabilizedPosition(QVector3D(hand->palmPosition().x,
-                                           hand->palmPosition().y,
-                                           hand->palmPosition().z));
+                                          hand->palmPosition().y,
+                                          hand->palmPosition().z));
     this->setSphereCenter(QVector3D(hand->sphereCenter().x,
-                                     hand->sphereCenter().y,
-                                     hand->sphereCenter().z));
+                                    hand->sphereCenter().y,
+                                    hand->sphereCenter().z));
+    this->setLeft(hand->isLeft());
+    this->setRight(hand->isRight());
+
+    Q_D(QtLeapHand);
+    QList<int> pointablesRemoved = d->m_pointables.keys();
+    for (int i = 0; i < hand->pointables().count(); i++) {
+        Leap::Pointable pointable = hand->pointables()[i];
+        if (pointable.isValid())
+        {
+            pointablesRemoved.removeOne(pointable.id());
+            if (d->m_pointables.contains(pointable.id()))
+            {
+                d->m_pointables[pointable.id()]->update(&pointable);
+            }
+            else
+            {
+                if (pointable.isFinger())
+                {
+                    QtLeapFinger *leapPointable = new QtLeapFinger(&pointable, this);
+                    d->m_pointables[pointable.id()] = leapPointable;
+                    d->m_fingers[pointable.id()] = leapPointable;
+                }
+                else if (pointable.isTool())
+                {
+                    QtLeapTool *leapPointable = new QtLeapTool(&pointable, this);
+                    d->m_pointables[pointable.id()] = leapPointable;
+                    d->m_tools[pointable.id()] = leapPointable;
+                }
+            }
+        }
+    }
+
+    Q_FOREACH (int id, pointablesRemoved)
+    {
+        d->m_fingers.remove(id);
+        d->m_tools.remove(id);
+        delete d->m_pointables.take(id);
+    }
 }
 
 int QtLeapHand::getId() const
 {
-    return this->m_id;
+    Q_D(const QtLeapHand);
+    return d->m_id;
 }
 
 float QtLeapHand::getPitch() const
 {
-    return this->m_pitch;
+    Q_D(const QtLeapHand);
+    return d->m_pitch;
 }
 
 float QtLeapHand::getYaw() const
 {
-    return this->m_yaw;
+    Q_D(const QtLeapHand);
+    return d->m_yaw;
 }
 
 float QtLeapHand::getRoll() const
 {
-    return this->m_roll;
+    Q_D(const QtLeapHand);
+    return d->m_roll;
 }
 
 float QtLeapHand::getTimeVisible() const
 {
-    return this->m_timeVisible;
+    Q_D(const QtLeapHand);
+    return d->m_timeVisible;
 }
 
 float QtLeapHand::getSphereRadius() const
 {
-    return this->m_sphereRadius;
+    Q_D(const QtLeapHand);
+    return d->m_sphereRadius;
+}
+
+bool QtLeapHand::isLeft() const
+{
+    Q_D(const QtLeapHand);
+    return d->m_right;
+}
+
+bool QtLeapHand::isRight() const
+{
+    Q_D(const QtLeapHand);
+    return d->m_left;
 }
 
 QVector3D QtLeapHand::getDirection() const
 {
-    return this->m_direction;
+    Q_D(const QtLeapHand);
+    return d->m_direction;
 }
 
 QVector3D QtLeapHand::getPosition() const
 {
-    return this->m_position;
+    Q_D(const QtLeapHand);
+    return d->m_position;
 }
 
 QVector3D QtLeapHand::getNormal() const
 {
-    return this->m_normal;
+    Q_D(const QtLeapHand);
+    return d->m_normal;
 }
 
 QVector3D QtLeapHand::getVelocity() const
 {
-    return this->m_velocity;
+    Q_D(const QtLeapHand);
+    return d->m_velocity;
 }
 
 QVector3D QtLeapHand::getStabilizedPosition() const
 {
-    return this->m_stabilizedPosition;
+    Q_D(const QtLeapHand);
+    return d->m_stabilizedPosition;
 }
 
 QVector3D QtLeapHand::getSphereCenter() const
 {
-    return this->m_sphereCenter;
+    Q_D(const QtLeapHand);
+    return d->m_sphereCenter;
 }
 
 QList<QtLeapPointable *> QtLeapHand::getPointables() const
 {
-    return this->m_pointables;
+    Q_D(const QtLeapHand);
+    return d->m_pointables.values();
 }
 
 QList<QtLeapFinger *> QtLeapHand::getFingers() const
 {
-    return this->m_fingers;
+    Q_D(const QtLeapHand);
+    return d->m_fingers.values();
 }
 
 QList<QtLeapTool *> QtLeapHand::getTools() const
 {
-    return this->m_tools;
+    Q_D(const QtLeapHand);
+    return d->m_tools.values();
+}
+
+void QtLeapHand::setId(int id)
+{
+    Q_D(QtLeapHand);
+    d->m_id = id;
 }
 
 void QtLeapHand::setPitch(float pitch)
 {
-    if (this->m_pitch != pitch)
+    Q_D(QtLeapHand);
+    if (d->m_pitch != pitch)
     {
-        this->m_pitch = pitch;
+        d->m_pitch = pitch;
         emit pitchChanged();
     }
 }
 
 void QtLeapHand::setYaw(float yaw)
 {
-    if (this->m_yaw != yaw)
+    Q_D(QtLeapHand);
+    if (d->m_yaw != yaw)
     {
-        this->m_yaw = yaw;
+        d->m_yaw = yaw;
         emit yawChanged();
     }
 }
 
 void QtLeapHand::setRoll(float roll)
 {
-    if (this->m_roll != roll)
+    Q_D(QtLeapHand);
+    if (d->m_roll != roll)
     {
-        this->m_roll = roll;
+        d->m_roll = roll;
         emit rollChanged();
+    }
+}
+
+void QtLeapHand::setLeft(bool left)
+{
+    Q_D(QtLeapHand);
+    if (d->m_left != left)
+    {
+        d->m_left = left;
+        emit isLeftChanged();
+    }
+}
+
+void QtLeapHand::setRight(bool right)
+{
+    Q_D(QtLeapHand);
+    if (d->m_right != right)
+    {
+        d->m_right = right;
+        emit isRightChanged();
     }
 }
 
 void QtLeapHand::setTimeVisible(float timeVisible)
 {
-    if (this->m_timeVisible != timeVisible)
+    Q_D(QtLeapHand);
+    if (d->m_timeVisible != timeVisible)
     {
-        this->m_timeVisible = timeVisible;
+        d->m_timeVisible = timeVisible;
         emit timeVisibleChanged();
     }
 }
 
 void QtLeapHand::setSphereRadius(float sphereRadius)
 {
-    if (this->m_sphereRadius != sphereRadius)
+    Q_D(QtLeapHand);
+    if (d->m_sphereRadius != sphereRadius)
     {
-        this->m_sphereRadius = sphereRadius;
+        d->m_sphereRadius = sphereRadius;
         emit sphereRadiusChanged();
     }
 }
 
 void QtLeapHand::setDirection(const QVector3D &direction)
 {
-    if (this->m_direction != direction)
+    Q_D(QtLeapHand);
+    if (d->m_direction != direction)
     {
-        this->m_direction = direction;
+        d->m_direction = direction;
         emit directionChanged();
     }
 }
 
 void QtLeapHand::setPosition(const QVector3D &position)
 {
-    if (this->m_position != position)
+    Q_D(QtLeapHand);
+    if (d->m_position != position)
     {
-        this->m_position = position;
+        d->m_position = position;
         emit positionChanged();
     }
 }
 
 void QtLeapHand::setNormal(const QVector3D &normal)
 {
-    if (this->m_normal != normal)
+    Q_D(QtLeapHand);
+    if (d->m_normal != normal)
     {
-        this->m_normal = normal;
+        d->m_normal = normal;
         emit normalChanged();
     }
 }
 
 void QtLeapHand::setVelocity(const QVector3D &velocity)
 {
-    if (this->m_velocity != velocity)
+    Q_D(QtLeapHand);
+    if (d->m_velocity != velocity)
     {
-        this->m_velocity = velocity;
+        d->m_velocity = velocity;
         emit velocityChanged();
     }
 }
 
 void QtLeapHand::setStabilizedPosition(const QVector3D &stabilizedPosition)
 {
-    if (this->m_stabilizedPosition != stabilizedPosition)
+    Q_D(QtLeapHand);
+    if (d->m_stabilizedPosition != stabilizedPosition)
     {
-        this->m_stabilizedPosition = stabilizedPosition;
+        d->m_stabilizedPosition = stabilizedPosition;
         emit stabilizedPositionChanged();
     }
 }
 
 void QtLeapHand::setSphereCenter(const QVector3D &sphereCenter)
 {
-    if (this->m_sphereCenter != sphereCenter)
+    Q_D(QtLeapHand);
+    if (d->m_sphereCenter != sphereCenter)
     {
-        this->m_sphereCenter = sphereCenter;
+        d->m_sphereCenter = sphereCenter;
         emit sphereCenterChanged();
     }
 }

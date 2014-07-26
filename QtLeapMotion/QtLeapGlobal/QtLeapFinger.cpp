@@ -38,4 +38,9 @@ QtLeapFinger::~QtLeapFinger()
 {
 }
 
+void QtLeapFinger::update(Leap::Pointable *pointable)
+{
+    QtLeapPointable::update(pointable);
+}
+
 } // QtLeapMotion

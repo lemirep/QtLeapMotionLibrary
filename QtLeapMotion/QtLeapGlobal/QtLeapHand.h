@@ -38,6 +38,7 @@ namespace QtLeapMotion
 class QtLeapPointable;
 class QtLeapFinger;
 class QtLeapTool;
+class QtLeapHandPrivate;
 
 class QTLEAPMOTION_EXPORT QtLeapHand : public QObject
 {
@@ -54,6 +55,9 @@ class QTLEAPMOTION_EXPORT QtLeapHand : public QObject
     Q_PROPERTY(QVector3D velocity READ getVelocity NOTIFY velocityChanged)
     Q_PROPERTY(QVector3D stabilizedPosition READ getStabilizedPosition NOTIFY stabilizedPositionChanged)
     Q_PROPERTY(QVector3D sphereCenter READ getSphereCenter NOTIFY sphereCenterChanged)
+    Q_PROPERTY(QList<QtLeapPointable *> pointables READ getPointables)
+    Q_PROPERTY(QList<QtLeapFinger *> fingers READ getFingers)
+    Q_PROPERTY(QList<QtLeapTool *> tools READ getTools)
 
 public :
     QtLeapHand(QObject *parent = 0);
@@ -68,6 +72,8 @@ public :
     float getRoll() const;
     float getTimeVisible() const;
     float getSphereRadius() const;
+    bool isLeft() const;
+    bool isRight() const;
 
     QVector3D getDirection() const;
     QVector3D getPosition() const;
@@ -82,9 +88,12 @@ public :
 
     Leap::Hand*  getHand() const;
 
+    void setId(int id);
     void setPitch(float pitch);
     void setYaw(float yaw);
     void setRoll(float roll);
+    void setLeft(bool left);
+    void setRight(bool right);
     void setTimeVisible(float timeVisible);
     void setSphereRadius(float sphereRadius);
     void setDirection(const QVector3D &direction);
@@ -93,25 +102,6 @@ public :
     void setVelocity(const QVector3D &velocity);
     void setStabilizedPosition(const QVector3D &stabilizedPosition);
     void setSphereCenter(const QVector3D &sphereCenter);
-
-private :
-    int m_id;
-    float m_pitch;
-    float m_roll;
-    float m_yaw;
-    float m_timeVisible;
-    float m_sphereRadius;
-
-    QVector3D m_direction;
-    QVector3D m_position;
-    QVector3D m_normal;
-    QVector3D m_velocity;
-    QVector3D m_stabilizedPosition;
-    QVector3D m_sphereCenter;
-
-    QList<QtLeapPointable*> m_pointables;
-    QList<QtLeapFinger*> m_fingers;
-    QList<QtLeapTool*> m_tools;
 
 signals:
     void pitchChanged();
@@ -125,6 +115,12 @@ signals:
     void velocityChanged();
     void stabilizedPositionChanged();
     void sphereCenterChanged();
+    void isLeftChanged();
+    void isRightChanged();
+
+private :
+    Q_DECLARE_PRIVATE(QtLeapHand)
+    QtLeapHandPrivate *d_ptr;
 };
 
 }

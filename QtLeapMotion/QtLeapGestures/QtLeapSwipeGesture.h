@@ -35,6 +35,8 @@
 namespace QtLeapMotion
 {
 
+class QtLeapSwipeGesturePrivate;
+
 class QTLEAPMOTION_EXPORT QtLeapSwipeGesture : public QObject, public QtLeapGesture
 {
     Q_OBJECT
@@ -46,16 +48,9 @@ class QTLEAPMOTION_EXPORT QtLeapSwipeGesture : public QObject, public QtLeapGest
     Q_PROPERTY(GestureState state READ getState NOTIFY stateChanged)
     Q_ENUMS(GestureState)
 
-private:
-    GestureState m_state;
-    QVector3D m_direction;
-    QVector3D m_position;
-    QVector3D m_startPosition;
-    qreal     m_speed;
-    int       m_id;
-
 public :
-    QtLeapSwipeGesture(QObject *parent = 0);
+    explicit QtLeapSwipeGesture(QObject *parent = 0);
+    ~QtLeapSwipeGesture();
 
     GestureState getState() const;
     QVector3D getDirection() const;
@@ -80,6 +75,10 @@ signals :
     void startPositionChanged();
     void speedChanged();
     void stateChanged();
+
+private:
+    Q_DECLARE_PRIVATE(QtLeapSwipeGesture)
+    QtLeapSwipeGesturePrivate *d_ptr;
 
 };
 

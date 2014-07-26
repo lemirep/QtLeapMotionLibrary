@@ -35,6 +35,8 @@
 namespace QtLeapMotion
 {
 
+class QtLeapTapGesturePrivate;
+
 class QTLEAPMOTION_EXPORT QtLeapTapGesture : public QObject, public QtLeapGesture
 {
     Q_OBJECT
@@ -44,14 +46,9 @@ class QTLEAPMOTION_EXPORT QtLeapTapGesture : public QObject, public QtLeapGestur
     Q_PROPERTY(GestureState state READ getState NOTIFY stateChanged)
     Q_ENUMS(GestureState)
 
-private:
-    int m_id;
-    QVector3D m_direction;
-    QVector3D m_position;
-    GestureState m_state;
-
 public :
     QtLeapTapGesture(QObject *parent = 0);
+    virtual ~QtLeapTapGesture();
 
     int       getId() const;
     QVector3D getDirection() const;
@@ -71,6 +68,9 @@ signals:
     void      positionChanged();
     void      stateChanged();
 
+private:
+    Q_DECLARE_PRIVATE(QtLeapTapGesture)
+    QtLeapTapGesturePrivate *d_ptr;
 };
 
 }

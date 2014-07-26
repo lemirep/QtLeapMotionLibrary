@@ -29,207 +29,237 @@
 namespace QtLeapMotion
 {
 
+class QtLeapPointablePrivate
+{
+public:
+    QtLeapPointablePrivate(QtLeapPointable *qq)
+        : q_ptr(qq)
+    {
+    }
+
+    Q_DECLARE_PUBLIC(QtLeapPointable)
+
+    int m_id;
+    bool m_hovering;
+    bool m_touching;
+    float m_width;
+    float m_length;
+    float m_touchDistance;
+    float m_timeVisible;
+    QVector3D m_position;
+    QVector3D m_direction;
+    QVector3D m_stabilizedPosition;
+    QVector3D m_velocity;
+    QtLeapHand *m_hand;
+    QtLeapPointable *q_ptr;
+};
+
 QtLeapPointable::QtLeapPointable(Leap::Pointable *pointable,
                                  QtLeapHand *parent)
     : QObject(parent)
+    , d_ptr(new QtLeapPointablePrivate(this))
 {
-    this->m_hand = parent;
-
+    Q_D(QtLeapPointable);
+    d->m_hand = parent;
+    d->m_id = pointable->id();
+    update(pointable);
 }
 
 QtLeapPointable::~QtLeapPointable()
 {
+    delete d_ptr;
 }
 
 int QtLeapPointable::getId() const
 {
-    return this->m_id;
+    Q_D(const QtLeapPointable);
+    return d->m_id;
 }
 
 bool QtLeapPointable::isHovering() const
 {
-    return this->m_hovering;
+    Q_D(const QtLeapPointable);
+    return d->m_hovering;
 }
 
 bool QtLeapPointable::isTouching() const
 {
-    return this->m_touching;
+    Q_D(const QtLeapPointable);
+    return d->m_touching;
 }
 
 float QtLeapPointable::getWidth() const
 {
-    return this->m_width;
+    Q_D(const QtLeapPointable);
+    return d->m_width;
 }
 
 float QtLeapPointable::getLength() const
 {
-    return this->m_length;
+    Q_D(const QtLeapPointable);
+    return d->m_length;
 }
 
 float QtLeapPointable::getTouchDistance() const
 {
-    return this->m_touchDistance;
+    Q_D(const QtLeapPointable);
+    return d->m_touchDistance;
 }
 
 float QtLeapPointable::getTimeVisible() const
 {
-    return this->m_timeVisible;
+    Q_D(const QtLeapPointable);
+    return d->m_timeVisible;
 }
 
 QVector3D QtLeapPointable::getPosition() const
 {
-    return this->m_position;
+    Q_D(const QtLeapPointable);
+    return d->m_position;
 }
 
 QVector3D QtLeapPointable::getDirection() const
 {
-    return this->m_direction;
+    Q_D(const QtLeapPointable);
+    return d->m_direction;
 }
 
 QVector3D QtLeapPointable::getStabilizedPosition() const
 {
-    return this->m_stabilizedPosition;
+    Q_D(const QtLeapPointable);
+    return d->m_stabilizedPosition;
 }
 
 QVector3D QtLeapPointable::getVelocity() const
 {
-    return this->m_velocity;
-}
-
-QVector3D QtLeapPointable::getTipPosition() const
-{
-    return this->m_tipPosition;
-}
-
-QVector3D QtLeapPointable::getTipVelocity() const
-{
-    return this->m_tipVelocity;
-}
-
-QVector3D QtLeapPointable::getStabilizedTipPosition() const
-{
-    return this->m_stabilizedTipPosition;
+    Q_D(const QtLeapPointable);
+    return d->m_velocity;
 }
 
 QtLeapHand *QtLeapPointable::getHand() const
 {
-    return this->m_hand;
+    Q_D(const QtLeapPointable);
+    return d->m_hand;
+}
+
+void QtLeapPointable::update(Leap::Pointable *pointable)
+{
+    this->setDirection(QVector3D(pointable->direction().x,
+                                 pointable->direction().y,
+                                 pointable->direction().z));
+    this->setVelocity(QVector3D(pointable->tipVelocity().x,
+                                pointable->tipVelocity().y,
+                                pointable->tipVelocity().z));
+    this->setPosition(QVector3D(pointable->tipPosition().x,
+                                pointable->tipPosition().y,
+                                pointable->tipPosition().z));
+    this->setStabilizedPosition(QVector3D(pointable->stabilizedTipPosition().x,
+                                          pointable->stabilizedTipPosition().y,
+                                          pointable->stabilizedTipPosition().z));
+    this->setLength(pointable->length());
+    this->setWidth(pointable->width());
+    this->setHovering(pointable->touchDistance() >= 0);
+    this->setTouching(!isHovering());
+    this->setTouchDistance(pointable->touchDistance());
 }
 
 void QtLeapPointable::setHovering(bool hovering)
 {
-    if (this->m_hovering != hovering)
+    Q_D(QtLeapPointable);
+    if (d->m_hovering != hovering)
     {
-        this->m_hovering = hovering;
+        d->m_hovering = hovering;
         emit hoveringChanged();
     }
 }
 
 void QtLeapPointable::setTouching(bool touching)
 {
-    if (this->m_touching != touching)
+    Q_D(QtLeapPointable);
+    if (d->m_touching != touching)
     {
-        this->m_touching = touching;
+        d->m_touching = touching;
         emit touchingChanged();
     }
 }
 
 void QtLeapPointable::setWidth(float width)
 {
-    if (this->m_width != width)
+    Q_D(QtLeapPointable);
+    if (d->m_width != width)
     {
-        this->m_width = width;
+        d->m_width = width;
         emit widthChanged();
     }
 }
 
 void QtLeapPointable::setLength(float length)
 {
-    if (this->m_length != length)
+    Q_D(QtLeapPointable);
+    if (d->m_length != length)
     {
-        this->m_length = length;
+        d->m_length = length;
         emit lengthChanged();
     }
 }
 
 void QtLeapPointable::setTouchDistance(float touchDistance)
 {
-    if (this->m_touchDistance != touchDistance)
+    Q_D(QtLeapPointable);
+    if (d->m_touchDistance != touchDistance)
     {
-        this->m_touchDistance = touchDistance;
+        d->m_touchDistance = touchDistance;
         emit touchDistanceChanged();
     }
 }
 
 void QtLeapPointable::setTimeVisible(float timeVisible)
 {
-    if (this->m_timeVisible != timeVisible)
+    Q_D(QtLeapPointable);
+    if (d->m_timeVisible != timeVisible)
     {
-        this->m_timeVisible = timeVisible;
+        d->m_timeVisible = timeVisible;
         emit timeVisibleChanged();
     }
 }
 
 void QtLeapPointable::setPosition(const QVector3D &position)
 {
-    if (this->m_position != position)
+    Q_D(QtLeapPointable);
+    if (d->m_position != position)
     {
-        this->m_position = position;
+        d->m_position = position;
         emit positionChanged();
     }
 }
 
 void QtLeapPointable::setDirection(const QVector3D &direction)
 {
-    if (this->m_direction != direction)
+    Q_D(QtLeapPointable);
+    if (d->m_direction != direction)
     {
-        this->m_direction = direction;
+        d->m_direction = direction;
         emit directionChanged();
     }
 }
 
 void QtLeapPointable::setStabilizedPosition(const QVector3D &stabilizedPosition)
 {
-    if (this->m_stabilizedPosition != stabilizedPosition)
+    Q_D(QtLeapPointable);
+    if (d->m_stabilizedPosition != stabilizedPosition)
     {
-        this->m_stabilizedPosition = stabilizedPosition;
+        d->m_stabilizedPosition = stabilizedPosition;
         emit stabilizedPositionChanged();
     }
 }
 
 void QtLeapPointable::setVelocity(const QVector3D &velocity)
 {
-    if (this->m_velocity != velocity)
+    Q_D(QtLeapPointable);
+    if (d->m_velocity != velocity)
     {
-        this->m_velocity = velocity;
+        d->m_velocity = velocity;
         emit velocityChanged();
-    }
-}
-
-void QtLeapPointable::setTipPosition(const QVector3D &tipPosition)
-{
-    if (this->m_tipPosition != tipPosition)
-    {
-        this->m_tipVelocity = tipPosition;
-        emit tipPositionChanged();
-    }
-}
-
-void QtLeapPointable::setTipVelocity(const QVector3D &tipVelocity)
-{
-    if (this->m_tipVelocity != tipVelocity)
-    {
-        this->m_tipVelocity = tipVelocity;
-        emit tipVelocityChanged();
-    }
-}
-
-void QtLeapPointable::setTipStabilizedPosition(const QVector3D &stabilizedTipPosition)
-{
-    if (this->m_stabilizedTipPosition != stabilizedTipPosition)
-    {
-        this->m_stabilizedPosition = stabilizedTipPosition;
-        emit stabilizedTipPositionChanged();
     }
 }
 
