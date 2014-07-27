@@ -24,6 +24,7 @@
 ****************************************************************************/
 
 #include "QtLeapCircleGesture.h"
+#include <qmath.h>
 
 namespace QtLeapMotion
 {

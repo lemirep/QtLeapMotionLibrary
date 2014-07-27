@@ -26,9 +26,9 @@
 #ifndef CIRCLELEAPGESTUREAREA_H
 #define CIRCLELEAPGESTUREAREA_H
 
-#include <QtLeapGestures/QtLeapCircleGesture.h>
-#include <QtLeapGestures/Qml/AbstractGestureArea.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapCircleGesture.h>
+#include <AbstractGestureArea.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

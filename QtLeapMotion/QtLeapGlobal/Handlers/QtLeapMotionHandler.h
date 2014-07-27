@@ -26,11 +26,10 @@
 #ifndef QTLEAPMOTIONHANDLER_H
 #define QTLEAPMOTIONHANDLER_H
 
-#include <Leap.h>
 #include <QList>
 #include <QObject>
-#include <QtLeapGlobal/QtLeapUtils.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapUtils.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

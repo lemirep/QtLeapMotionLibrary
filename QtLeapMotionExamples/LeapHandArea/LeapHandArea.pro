@@ -42,22 +42,23 @@ INCLUDEPATH += ../../QtLeapMotion/Leap/include
 win32: {
  !contains(QMAKE_HOST.arch, x86_64) {
         message("x86 build")
-        LIBS += -L../../QtLeapMotion/Leap/x86/Leap.lib
-        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+        message($$OUT_PWD)
+        LIBS += $$PWD/../../QtLeapMotion/Leap/x86/Leap.lib
+        LIBS += $$OUT_PWD/../../QtLeapMotion/QtLeapMotion.lib
     } else {
         message("x86_64 build")
-        LIBS += -L../../QtLeapMotion/Leap/x64/Leap.lib
-        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+        LIBS += $$PWD/../../QtLeapMotion/Leap/x64/Leap.lib
+        LIBS += $$OUT_PWD/../../QtLeapMotion/QtLeapMotion.lib
     }
 }
 
 linux-g++: {
     !contains(QMAKE_HOST.arch, x86_64) {
         LIBS += -L../../QtLeapMotion/Leap/x86/ -lLeap
-        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
+        LIBS += -L$$OUT_PWD/../../QtLeapMotion/ -lQtLeapMotion
     } else {
         message("x86_64 build")
-        LIBS += -L../../QtLeapMotion/ -lQtLeapMotion
         LIBS += -L../../QtLeapMotion/Leap/x64/ -lLeap
+        LIBS += -L$$OUT_PWD/../../QtLeapMotion/ -lQtLeapMotion
     }
 }

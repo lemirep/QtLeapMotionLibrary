@@ -28,9 +28,12 @@
 
 #include <QObject>
 #include <QVector3D>
-#include "Leap.h"
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapGlobal.h>
 
+namespace Leap
+{
+class Pointable;
+}
 
 namespace QtLeapMotion
 {

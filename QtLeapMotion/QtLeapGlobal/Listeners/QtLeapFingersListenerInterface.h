@@ -26,7 +26,7 @@
 #ifndef QTLEAPFINGERSLISTENERINTERFACE_H
 #define QTLEAPFINGERSLISTENERINTERFACE_H
 
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

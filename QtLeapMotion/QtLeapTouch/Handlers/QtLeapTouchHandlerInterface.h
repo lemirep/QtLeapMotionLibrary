@@ -26,8 +26,8 @@
 #ifndef __LEAPTOUCHHANDLERINTERFACE_H__
 #define __LEAPTOUCHHANDLERINTERFACE_H__
 
-#include <QtLeapGlobal/Handlers/QtLeapMotionHandler.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapMotionHandler.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

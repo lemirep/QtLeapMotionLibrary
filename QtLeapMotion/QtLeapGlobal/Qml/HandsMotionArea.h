@@ -27,8 +27,8 @@
 #define HANDSMOTIONAREA_H
 
 #include <QQuickItem>
-#include <QtLeapGlobal/Listeners/QtLeapHandsListenerInterface.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapHandsListenerInterface.h>
+#include <QtLeapGlobal.h>
 
 
 namespace QtLeapMotion

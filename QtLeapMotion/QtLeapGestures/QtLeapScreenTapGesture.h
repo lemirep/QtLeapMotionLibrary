@@ -26,8 +26,8 @@
 #ifndef QTLEAPSCREENTAPGESTURE_H
 #define QTLEAPSCREENTAPGESTURE_H
 
-#include <QtLeapGestures/QtLeapTapGesture.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapTapGesture.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

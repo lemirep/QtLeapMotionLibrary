@@ -30,9 +30,9 @@
 #include <QSGSimpleRectNode>
 #include <QQuickItem>
 #include <QObject>
-#include <QtLeapGlobal/QtLeapGlobal.h>
-#include <QtLeapGestures/QtLeapGesture.h>
-#include <QtLeapGestures/Listeners/QtLeapGestureListenerInterface.h>
+#include <QtLeapGlobal.h>
+#include <QtLeapGesture.h>
+#include <QtLeapGestureListenerInterface.h>
 
 namespace QtLeapMotion
 {

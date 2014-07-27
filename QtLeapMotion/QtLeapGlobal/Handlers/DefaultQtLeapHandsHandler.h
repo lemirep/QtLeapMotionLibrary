@@ -28,8 +28,8 @@
 
 #include <QObject>
 #include <QHash>
-#include <QtLeapGlobal/QtLeapGlobal.h>
-#include <QtLeapGlobal/Handlers/QtLeapHandsHandlerInterface.h>
+#include <QtLeapGlobal.h>
+#include <QtLeapHandsHandlerInterface.h>
 
 namespace QtLeapMotion
 {

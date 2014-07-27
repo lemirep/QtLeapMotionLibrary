@@ -27,7 +27,7 @@
 #define QTLEAPMOTION_QTLEAPBONE_H
 
 #include <QObject>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

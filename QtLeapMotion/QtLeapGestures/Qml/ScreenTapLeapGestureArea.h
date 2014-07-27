@@ -26,9 +26,9 @@
 #ifndef SCREENTAPLEAPGESTUREAREA_H
 #define SCREENTAPLEAPGESTUREAREA_H
 
-#include <QtLeapGestures/QtLeapScreenTapGesture.h>
-#include <QtLeapGestures/Qml/AbstractGestureArea.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapScreenTapGesture.h>
+#include <AbstractGestureArea.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

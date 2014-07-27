@@ -26,8 +26,8 @@
 #ifndef QTLEAPHANDSHANDLERINTERFACE_H
 #define QTLEAPHANDSHANDLERINTERFACE_H
 
-#include <QtLeapGlobal/QtLeapGlobal.h>
-#include <QtLeapGlobal/Handlers/QtLeapMotionHandler.h>
+#include <QtLeapGlobal.h>
+#include <QtLeapMotionHandler.h>
 
 namespace QtLeapMotion
 {

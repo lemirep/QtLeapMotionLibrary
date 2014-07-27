@@ -27,7 +27,7 @@
 #define __LEAPMOTIONQQUICKVIEW_H_
 
 #include <QtQuick/QQuickView>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include "QtLeapGlobal.h"
 
 namespace QtLeapMotion
 {

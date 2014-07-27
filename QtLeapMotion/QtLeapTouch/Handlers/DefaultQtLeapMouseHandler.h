@@ -30,8 +30,8 @@
 #include <QCursor>
 #include <QMouseEvent>
 #include <QCoreApplication>
-#include <QtLeapTouch/Handlers/QtLeapMouseHandlerInterface.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapMouseHandlerInterface.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

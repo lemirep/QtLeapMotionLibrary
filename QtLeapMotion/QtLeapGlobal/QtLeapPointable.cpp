@@ -25,6 +25,7 @@
 
 #include "QtLeapPointable.h"
 #include "QtLeapHand.h"
+#include "Leap.h"
 
 namespace QtLeapMotion
 {

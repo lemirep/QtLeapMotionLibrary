@@ -26,9 +26,9 @@
 #ifndef KEYTAPLEAPGESTUREAREA_H
 #define KEYTAPLEAPGESTUREAREA_H
 
-#include <QtLeapGestures/QtLeapTapGesture.h>
-#include <QtLeapGestures/Qml/AbstractGestureArea.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapTapGesture.h>
+#include <AbstractGestureArea.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

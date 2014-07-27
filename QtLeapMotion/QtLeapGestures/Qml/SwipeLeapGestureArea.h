@@ -30,9 +30,9 @@
 #include <QQmlListProperty>
 #include <QHash>
 #include <QSGSimpleRectNode>
-#include <QtLeapGestures/QtLeapSwipeGesture.h>
-#include <QtLeapGestures/Qml/AbstractGestureArea.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapSwipeGesture.h>
+#include <AbstractGestureArea.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

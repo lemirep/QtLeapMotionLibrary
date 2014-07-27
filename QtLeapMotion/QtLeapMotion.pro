@@ -27,7 +27,7 @@ TEMPLATE = lib
 
 TARGET = QtLeapMotion
 
-DEFINE += QTLEAPMOTION_LIBRARY
+DEFINES += QTLEAPMOTION_LIBRARY
 
 CONFIG += dll
 
@@ -71,5 +71,5 @@ linux-g++: {
 #    QMAKE_RPATH=
 #}
 
-#win32:DESTDIR = ./
+win32:DESTDIR = ./
 

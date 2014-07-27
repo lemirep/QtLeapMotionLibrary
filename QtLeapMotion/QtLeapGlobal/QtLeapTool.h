@@ -27,8 +27,13 @@
 #define QTLEAPTOOL_H
 
 #include <QObject>
-#include <QtLeapGlobal/QtLeapGlobal.h>
-#include <QtLeapGlobal/QtLeapPointable.h>
+#include <QtLeapGlobal.h>
+#include <QtLeapPointable.h>
+
+namespace Leap
+{
+class Pointable;
+}
 
 namespace QtLeapMotion
 {

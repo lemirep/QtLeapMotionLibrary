@@ -38,7 +38,7 @@
 #include <QQuickItem>
 #include "Leap.h"
 #include <qmath.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapGlobal.h>
 
 namespace QtLeapMotion
 {

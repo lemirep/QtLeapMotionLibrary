@@ -29,8 +29,12 @@
 #include <QObject>
 #include <QVector3D>
 #include <QList>
-#include "Leap.h"
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapGlobal.h>
+
+namespace Leap
+{
+class Hand;
+}
 
 namespace QtLeapMotion
 {

@@ -28,9 +28,9 @@
 
 #include <QObject>
 #include <QTouchEvent>
-#include <QtLeapTouch/QtLeapMotionTouchDevice.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
-#include <QtLeapTouch/Handlers/QtLeapTouchHandlerInterface.h>
+#include <QtLeapMotionTouchDevice.h>
+#include <QtLeapGlobal.h>
+#include <QtLeapTouchHandlerInterface.h>
 
 namespace QtLeapMotion
 {

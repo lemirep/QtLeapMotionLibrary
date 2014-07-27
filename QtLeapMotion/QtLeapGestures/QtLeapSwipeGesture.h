@@ -26,8 +26,8 @@
 #ifndef QTLEAPSWIPEGESTURE_H
 #define QTLEAPSWIPEGESTURE_H
 
-#include <QtLeapGestures/QtLeapGesture.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapGesture.h>
+#include <QtLeapGlobal.h>
 #include <QVector3D>
 #include <QString>
 #include <QObject>

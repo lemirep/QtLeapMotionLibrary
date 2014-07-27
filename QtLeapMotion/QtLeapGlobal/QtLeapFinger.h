@@ -27,12 +27,16 @@
 #define QTLEAPMOTION_LEAPFINGER_H__
 
 #include <QObject>
-#include <QtLeapGlobal/QtLeapPointable.h>
-#include <QtLeapGlobal/QtLeapGlobal.h>
+#include <QtLeapPointable.h>
+#include "QtLeapGlobal.h"
+
+namespace Leap
+{
+class Pointable;
+}
 
 namespace QtLeapMotion
 {
-
 class QtLeapPointable;
 
 class QTLEAPMOTION_EXPORT QtLeapFinger : public QtLeapPointable
@@ -40,7 +44,7 @@ class QTLEAPMOTION_EXPORT QtLeapFinger : public QtLeapPointable
     Q_OBJECT
 public :
     QtLeapFinger(Leap::Pointable *pointable, QtLeapHand *parent);
-    virtual ~QtLeapFinger();
+    ~QtLeapFinger();
 
     QtLeapFinger *fromLeapPointable(Leap::Pointable *pointable);
     void update(Leap::Pointable *pointable) Q_DECL_OVERRIDE;
