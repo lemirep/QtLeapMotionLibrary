@@ -57,6 +57,7 @@ public:
     float m_sphereRadius;
     bool m_left;
     bool m_right;
+    bool m_isFist;
 
     QVector3D m_direction;
     QVector3D m_position;
@@ -117,6 +118,8 @@ void QtLeapHand::update(Leap::Hand *hand)
                                     hand->sphereCenter().z));
     this->setLeft(hand->isLeft());
     this->setRight(hand->isRight());
+    // if sphereradius < 50 mm, we have a fist
+    this->setFist(hand->sphereRadius() <= 50.0f);
 
     Q_D(QtLeapHand);
     QList<int> pointablesRemoved = d->m_pointables.keys();
@@ -124,9 +127,9 @@ void QtLeapHand::update(Leap::Hand *hand)
         Leap::Pointable pointable = hand->pointables()[i];
         if (pointable.isValid())
         {
-            pointablesRemoved.removeOne(pointable.id());
             if (d->m_pointables.contains(pointable.id()))
             {
+                pointablesRemoved.removeAll(pointable.id());
                 d->m_pointables[pointable.id()]->update(&pointable);
             }
             else
@@ -201,6 +204,12 @@ bool QtLeapHand::isRight() const
 {
     Q_D(const QtLeapHand);
     return d->m_left;
+}
+
+bool QtLeapHand::isFist() const
+{
+    Q_D(const QtLeapHand);
+    return d->m_isFist;
 }
 
 QVector3D QtLeapHand::getDirection() const
@@ -390,6 +399,16 @@ void QtLeapHand::setSphereCenter(const QVector3D &sphereCenter)
     {
         d->m_sphereCenter = sphereCenter;
         emit sphereCenterChanged();
+    }
+}
+
+void QtLeapHand::setFist(bool fist)
+{
+    Q_D(QtLeapHand);
+    if (d->m_isFist != fist)
+    {
+        d->m_isFist = fist;
+        emit isFistChanged();
     }
 }
 

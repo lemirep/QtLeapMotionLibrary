@@ -33,8 +33,45 @@ Rectangle
     height : Screen.height
     color : "dodgerblue"
 
+    property int oldHandId : -1
+    property bool fist : false
+
     HandsMotionArea
     {
+        onHandAdded: {
 
+            console.log("Hand Added")
+            if (oldHandId === -1)
+                oldHandId = hand.id
+        }
+
+        onHandRemoved: {
+
+            console.log("Hand Removed")
+            if (oldHandId !== -1)
+            {
+                oldHandId = -1;
+                fist = false;
+            }
+        }
+
+        onHandUpdated : {
+            console.log("Fingers" + hand.isFist);
+            if (oldHandId !== -1)
+                fist = hand.isFist
+        }
     }
+
+    Text
+    {
+        width : parent.width
+        height : parent.height
+        text : "We have a fist"
+        color : "black";
+        visible : fist
+        font.pointSize: 45
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+    }
+
 }

@@ -59,9 +59,12 @@ class QTLEAPMOTION_EXPORT QtLeapHand : public QObject
     Q_PROPERTY(QVector3D velocity READ getVelocity NOTIFY velocityChanged)
     Q_PROPERTY(QVector3D stabilizedPosition READ getStabilizedPosition NOTIFY stabilizedPositionChanged)
     Q_PROPERTY(QVector3D sphereCenter READ getSphereCenter NOTIFY sphereCenterChanged)
-    Q_PROPERTY(QList<QtLeapPointable *> pointables READ getPointables)
-    Q_PROPERTY(QList<QtLeapFinger *> fingers READ getFingers)
-    Q_PROPERTY(QList<QtLeapTool *> tools READ getTools)
+    Q_PROPERTY(QList<QtLeapMotion::QtLeapPointable *> pointables READ getPointables)
+    Q_PROPERTY(QList<QtLeapMotion::QtLeapFinger *> fingers READ getFingers)
+    Q_PROPERTY(QList<QtLeapMotion::QtLeapTool *> tools READ getTools)
+    Q_PROPERTY(bool isFist READ isFist NOTIFY isFistChanged)
+    Q_PROPERTY(bool isLeft READ isLeft NOTIFY isLeftChanged)
+    Q_PROPERTY(bool isRight READ isRight NOTIFY isRightChanged)
 
 public :
     QtLeapHand(QObject *parent = 0);
@@ -78,6 +81,7 @@ public :
     float getSphereRadius() const;
     bool isLeft() const;
     bool isRight() const;
+    bool isFist() const;
 
     QVector3D getDirection() const;
     QVector3D getPosition() const;
@@ -106,6 +110,7 @@ public :
     void setVelocity(const QVector3D &velocity);
     void setStabilizedPosition(const QVector3D &stabilizedPosition);
     void setSphereCenter(const QVector3D &sphereCenter);
+    void setFist(bool fist);
 
 signals:
     void pitchChanged();
@@ -121,6 +126,7 @@ signals:
     void sphereCenterChanged();
     void isLeftChanged();
     void isRightChanged();
+    void isFistChanged();
 
 private :
     Q_DECLARE_PRIVATE(QtLeapHand)

@@ -43,6 +43,9 @@
 #include "HandsMotionArea.h"
 #include "FingersMotionArea.h"
 
+#include "QtLeapHand.h"
+#include "QtLeapFinger.h"
+
 namespace QtLeapMotion
 {
 
@@ -59,7 +62,9 @@ QtLeapMotionQQuickView::QtLeapMotionQQuickView() :
     qmlRegisterType<QtLeapMotion::HandsMotionArea>("QtLeapMotion", 2, 0, "HandsMotionArea");
     qmlRegisterType<QtLeapMotion::FingersMotionArea>("QtLeapMotion", 2, 0, "FingersMotionArea");
     qmlRegisterUncreatableType<QtLeapMotion::QtLeapSwipeGesture>("QtLeapMotion", 2, 0, "QtLeapSwipeGesture", "");
-//    qmlRegisterUncreatableType<QtLeapMotion::QtLeapTapGesture>("QtLeapMotion", 2, 0, "QtLeapTapGesture", "");
+    qmlRegisterUncreatableType<QtLeapMotion::QtLeapHand>("QtLeapMotion", 2, 0, "Hand", "");
+    qmlRegisterUncreatableType<QtLeapMotion::QtLeapFinger>("QtLeapMotion", 2, 0, "Finger", "");
+    //    qmlRegisterUncreatableType<QtLeapMotion::QtLeapTapGesture>("QtLeapMotion", 2, 0, "QtLeapTapGesture", "");
 //    qmlRegisterUncreatableType<QtLeapMotion::QtLeapScreenTapGesture>("QtLeapMotion", 2, 0, "QtLeapScreenTapGesture", "");
 //    qmlRegisterUncreatableType<QtLeapMotion::QtLeapCircleGesture>("QtLeapMotion", 2, 0, "QtLeapCircleGesture", "");
 

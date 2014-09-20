@@ -57,12 +57,13 @@ protected:
     void itemChange(ItemChange, const ItemChangeData &);
 
 signals:
+    void handUpdated(QtLeapMotion::QtLeapHand *hand);
+    void handAdded(QtLeapMotion::QtLeapHand *hand);
+    void handRemoved(QtLeapMotion::QtLeapHand *hand);
     void handsChanged();
-    void handAdded();
-    void handRemoved();
 
 private:
-    QList<QtLeapHand*> m_hands;
+    QHash<int, QtLeapMotion::QtLeapHand *> m_hands;
 };
 
 }

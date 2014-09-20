@@ -39,13 +39,32 @@ HandsMotionArea::HandsMotionArea(QQuickItem *parent) :
 
 void HandsMotionArea::updateHands(QList<QtLeapHand *> handsList)
 {
-    m_hands = handsList;
+    QHash<int, QtLeapHand *> oldHands = m_hands;
+    foreach (QtLeapHand *hand, handsList)
+    {
+        if (oldHands.contains(hand->getId()))
+        {
+            oldHands.remove(hand->getId());
+            emit handUpdated(hand);
+        }
+        else
+        {
+            m_hands.insert(hand->getId(), hand);
+            emit handAdded(hand);
+        }
+    }
+
+    foreach (int id, oldHands.keys())
+    {
+        m_hands.remove(id);
+        emit handRemoved(oldHands.value(id));
+    }
     emit handsChanged();
 }
 
 QList<QtLeapHand *> HandsMotionArea::getHands() const
 {
-    return m_hands;
+    return m_hands.values();
 }
 
 QSGNode *HandsMotionArea::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *data)
