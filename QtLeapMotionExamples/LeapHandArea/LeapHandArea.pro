@@ -62,3 +62,8 @@ linux-g++: {
         LIBS += -L$$OUT_PWD/../../QtLeapMotion/ -lQtLeapMotion
     }
 }
+
+macx{
+        LIBS += -L$$OUT_PWD/../../QtLeapMotion/ -lQtLeapMotion
+        LIBS += -L$$PWD/../../QtLeapMotion/Leap/lib -lLeap
+}
