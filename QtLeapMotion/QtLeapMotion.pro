@@ -66,10 +66,10 @@ linux-g++: {
 
 macx: {
     !contains(QMAKE_HOST.arch, x86_64) {
-        LIBS += -L$$PWD/Leap/x86/ -lLeap
+        LIBS += -L$$PWD/Leap/lib/ -lLeap
     } else {
         message("x86_64 build")
-        LIBS += -L$$PWD/Leap/x64/ -lLeap
+        LIBS += -L$$PWD/Leap/lib/ -lLeap
     }
 }
 
